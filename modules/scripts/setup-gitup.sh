@@ -106,7 +106,7 @@ read commit_msg
 timestamp=$(date +"%d-%m-%Y %H:%M")
 
 # commit message
-full_commit="(ツ)_/¯ ${commit_msg} [${timestamp}]"
+full_commit="(ツ)_/¯ ${commit_msg} -[ ${timestamp} ]-"
 
 echo ""
 echo -e "${cyan}Full commit message:${nc}"
