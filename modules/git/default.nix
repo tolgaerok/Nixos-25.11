@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  # Git configuration
+  # Git configuration...
   programs.git = {
     enable = true;
     config = {
