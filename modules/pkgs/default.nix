@@ -132,9 +132,14 @@ in {
     ripgrep-all
     ruby
     socat
-    vscode
+    vscode    
     vscode-extensions.brettm12345.nixfmt-vscode
-    vscode-extensions.mkhl.direnv
+    vscode-extensions.foxundermoon.shell-format
+    vscode-extensions.mkhl.direnv   
+
+    # Bash formatting
+    shfmt
+    shellcheck
 
     # System Info & Fun
     duf

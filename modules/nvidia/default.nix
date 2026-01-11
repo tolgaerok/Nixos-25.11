@@ -26,7 +26,7 @@ in {
       ];
     };
 
-    # System packages - MOVED INSIDE config block
+    # System packages
     environment.systemPackages = with pkgs; [
       symbola
       egl-wayland
