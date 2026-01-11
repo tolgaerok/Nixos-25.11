@@ -1,5 +1,6 @@
 # Tolga Erok
 # 12 Jan 26
+# Version 1.2
 
 # Create my bin directory
 mkdir -p ~/bin

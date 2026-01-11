@@ -44,3 +44,5 @@ in {
     ${pkgs.fontconfig}/bin/fc-cache -f -v
   '';
 }
+
+# /home/tolga/.local/share/fonts
