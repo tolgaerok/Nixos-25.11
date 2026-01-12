@@ -12,17 +12,11 @@ let
     pkgs.hplipWithPlugin
   ];
 in {
-  
+
   # Scanner drivers
   hardware.sane = {
     enable = true;
     extraBackends = extraBackends;
-  };
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
   };
 
   # Printing with CUPS

@@ -47,7 +47,7 @@ in {
       "video"
       "wheel"
     ];
-    
+
     packages = with pkgs; [
 
       kdePackages.kate

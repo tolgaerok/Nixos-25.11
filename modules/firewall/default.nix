@@ -1,9 +1,7 @@
 { config, options, lib, pkgs, ... }: {
 
   networking = {
-
     enableIPv6 = true;
-
     networkmanager.enable = true;
 
     # Configure firewall to your likings:

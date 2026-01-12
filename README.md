@@ -1,6 +1,9 @@
 # My NixOs 25.11 KDE & Nvidia
 
-![1768181109784](images/README/1768181109784.png)
+![Deskotp](images/README/1768181109784.png)
+![Bash](images/README/bash.png)
+![Network](images/README/image.png)
+![Samba](images/README/samba.png)
 
 <table style="border-collapse: collapse; width: 100%;">
   <tr>

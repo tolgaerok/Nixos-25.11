@@ -26,9 +26,10 @@ in {
   # ─────────────────────────────────────────────────────────
   services.samba = {
     enable = true;
-    package = pkgs.sambaFull;
+    package = pkgs.samba4Full;
     openFirewall = true;
     usershares.enable = true;
+    # securityType = "user";
 
     settings = {
       global = {
@@ -125,6 +126,7 @@ in {
         "inherit acls" = "yes";
         "force user" = mainUser;
         "force group" = sambagroups;
+
       };
 
       "NixOS_Public" = {
@@ -136,6 +138,7 @@ in {
         "directory mask" = "0755";
         "force user" = mainUser;
         "force group" = sambagroups;
+        "valid users" = mainUser;
       };
 
       "Mega" = {
@@ -147,17 +150,37 @@ in {
         "directory mask" = "0755";
         "force user" = mainUser;
         "force group" = sambagroups;
+        "valid users" = mainUser;
       };
     };
 
   };
 
   # ─────────────────────────────────────────────────────────
-  # Samba Web Service Discovery (Optional)
+  # Samba Related
+  # sudo smbpasswd -a tolga
   # ─────────────────────────────────────────────────────────
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
   };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish.enable = true;
+    publish.userServices = true;
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /home/${mainUser} 0777 ${mainUser} users - -"
+    "d /home/${mainUser}/Documents/MEGA 0777 ${mainUser} users - -"
+    "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
+    "d /var/spool/samba 1777 root root -"
+    # "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
+    # "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
+  ];
+
 
 }
