@@ -45,6 +45,7 @@ in {
     aspell
     aspellDicts.en
     hunspell
+    hunspellDicts.en_AU
     rPackages.hunspell
 
     # Multimedia
