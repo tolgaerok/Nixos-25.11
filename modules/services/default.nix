@@ -27,10 +27,12 @@
     rpcbind.enable = true;
     udisks2.enable = true;
 
+    devmon = { enable = true; };
+
     # GNOME keyring (secret service)
     gnome.gnome-keyring.enable = true;
     gnome.gcr-ssh-agent.enable = false;
-    
+
     # SMART monitoring
     smartd = {
       enable = true;

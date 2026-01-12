@@ -25,9 +25,9 @@ github_repo="$HOME/MyGitStuff/Nixos-25.11"
 gitlab_repo="$HOME/MyGitStuff/nixos-25-11-kde-nvidia"
 source_dir="/etc/nixos"
 
-echo -e "${cyan}╔════════════════════════════════════════╗${nc}"
-echo -e "${cyan}║   NIXOS CONFIG BACKUP - GitHub/GitLab  ║${nc}"
-echo -e "${cyan}╚════════════════════════════════════════╝${nc}"
+echo -e "${cyan}╔═══════════════════════════════════════════╗${nc}"
+echo -e "${cyan}║   MY NIXOS CONFIG BACKUP - GitHub/GitLab  ║${nc}"
+echo -e "${cyan}╚═══════════════════════════════════════════╝${nc}"
 echo ""
 
 # Check if my repos exist
