@@ -4,6 +4,8 @@
 ![Bash](images/README/bash.png)
 ![Network](images/README/image.png)
 ![Samba](images/README/samba.png)
+![Nvidia text](images/README/nvidia.png)
+
 
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
