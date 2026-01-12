@@ -23,13 +23,11 @@
         </tr>
         <tr>
           <td>CPU</td>
-          <td>Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz x 12
-</td>
+          <td>Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz x 12</td>
         </tr>
         <tr>
           <td>GPU</td>
-          <td>NVIDIA Corporation TU117 [GeForce GTX 1650] (rev a1)
-</td>
+          <td>NVIDIA Corporation TU117 [GeForce GTX 1650] (rev a1)</td>
         </tr>
         <tr>
           <td>MODEL</td>
