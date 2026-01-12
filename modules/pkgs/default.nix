@@ -86,7 +86,8 @@ in {
     megasync
     variety
     wpsoffice
-
+    element-desktop
+    
     # Compression & Archives
     atool
     file
@@ -132,10 +133,10 @@ in {
     ripgrep-all
     ruby
     socat
-    vscode    
+    vscode
     vscode-extensions.brettm12345.nixfmt-vscode
     vscode-extensions.foxundermoon.shell-format
-    vscode-extensions.mkhl.direnv   
+    vscode-extensions.mkhl.direnv
 
     # Bash formatting
     shfmt
