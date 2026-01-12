@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>README.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///etc/nixos/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///etc/nixos/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="my-nixos-2511-kde--nvidia">My NixOs 25.11 KDE &amp; Nvidia</h1>
+<p><img src="file:///etc/nixos/images/README/1768181109784.png" alt="1768181109784"></p>
+<table style="border-collapse: collapse; width: 100%;">
+  <tr>
+    <td style="border: none; width: 30%;" valign="top">
+      <div align="center">  
+          <img src="https://github.com/tolgaerok/nixos/assets/110285959/fa785dec-f839-43f2-9e03-58adb73d12c3" alt="HP" style="width: 80%;">
+          <br>  
+        
+      </div>
+    </td>
+    <td style="border: none; width: 70%;">
+      <table>
+        <tr>
+          <th align="left">Device</th>
+          <th align="left">Specification</th>
+        </tr>
+        <tr>
+          <td>BLUE-TOOTH</td>
+          <td>REALTEK 5G</td>
+        </tr>
+        <tr>
+          <td>CPU</td>
+          <td>Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz x 12
+</td>
+        </tr>
+        <tr>
+          <td>GPU</td>
+          <td>NVIDIA Corporation TU117 [GeForce GTX 1650] (rev a1)
+</td>
+        </tr>
+        <tr>
+          <td>MODEL</td>
+          <td>HP EliteDesk 800 G4 SFF</td>
+        </tr>
+        <tr>
+          <td>MOTHERBOARD</td>
+          <td>Intel&#xAE; 83E1</td>
+        </tr>
+        <tr>
+          <td>NETWORK</td>
+          <td>Intel Corporation Wi-Fi 6E(802.11ax) AX210/AX1675* 2x2 [Typhoon Peak] (rev 1a) 160MHz</td>
+        </tr>
+        <tr>
+          <td>RAM</td>
+          <td>32 GB DDR4</td>
+        </tr>
+        <tr>
+          <td>SATA</td>
+          <td>SAMSUNG SSD 870 EVO 500GB</td>
+        </tr>  
+      </table>
+    </td>
+</tr></table><h1 id="notes">Notes:</h1>
+<h3 id="make-etcnixos-writable">Make   /etc/nixos   writable</h3>
+<pre class="hljs"><code><div>sudo chown -R $(whoami):$(id -gn) /etc/nixos
+sudo chmod -R 777 /etc/nixos
+sudo chmod +x /etc/nixos/*
+<span class="hljs-built_in">export</span> NIXPKGS_ALLOW_INSECURE=1
+</div></code></pre>
+<h3 id="update-nixos-to-2511---latest-version-under-unstable-more-updates">Update NIXOS to 25.11 - Latest Version under unstable (more updates)</h3>
+<pre class="hljs"><code><div>sudo nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixos
+sudo nix-channel --update
+sudo nixos-rebuild switch --upgrade
+</div></code></pre>
+<h3 id="extras">Extras</h3>
+<ul>
+<li>Install git and some other programs for KDE 6</li>
+</ul>
+<pre class="hljs"><code><div>nix-env -iA nixos.git                       - 53.18 MiB download, 119.48 MiB unpacked
+nix-env -iA nixos.hyfetch                   - 1.80 MiB download, 14.05 MiB unpacked
+nix-shell -p kdePackages.plasma-workspace   - 1028.37 MiB download, 2834.11 MiB unpacked
+nix-shell -p kdePackages.sddm               - 3.49 MiB download, 5.62 MiB unpacked
+nix-shell -p kdePackages.full               - 74.62 MiB download, 232.35 MiB unpacked
+nix-env -iA nixos.kdePackages.kwin          - 188.33 MiB download, 195.40 MiB unpacked
+</div></code></pre>
+<h3 id="you-can-find-many-programs-here-for-nix-os">You can find many programs here for NIX OS</h3>
+<pre class="hljs"><code><div>https://search.nixos.org/packages?channel=unstable
+</div></code></pre>
+<h3 id="boot-space-error">BOOT SPACE ERROR</h3>
+<p>If you are out of space on your /boot partition then follow the steps in the section below</p>
+<ul>
+<li>Remove systemd boot, ideally this should be done automatically when systemd-boot is turned off, but 🤷.</li>
+</ul>
+<pre class="hljs"><code><div>bootctl remove
+</div></code></pre>
+<p>Then:</p>
+<pre class="hljs"><code><div>sudo rm -rf /boot/loader
+</div></code></pre>
+<h4 id="fix-for-boot-being-out-of-space">Fix for /boot being out of space</h4>
+<p>Rebuild but don't switch and store that config</p>
+<pre class="hljs"><code><div>sudo nixos-rebuild build
+</div></code></pre>
+<p>Run a garbage collection to remove the old system generation</p>
+<pre class="hljs"><code><div>sudo nix-collect-garbage -d
+</div></code></pre>
+<p>cd into /boot/kernels/</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> /boot/kernels
+</div></code></pre>
+<p>List the files and then delete any old kernels, DO NOT DELETE NEW ONES, BE VERY CAREFUL<br>
+Rebuild and switch</p>
+<pre class="hljs"><code><div>sudo nixos-rebuild switch
+</div></code></pre>
+<p>Now reboot</p>
+
+</body>
+
+</html>

@@ -1,11 +1,5 @@
 # My NixOs 25.11 KDE & Nvidia
 
-
-
-
-
-
-
 ![1768181109784](images/README/1768181109784.png)
 
 <table style="border-collapse: collapse; width: 100%;">
