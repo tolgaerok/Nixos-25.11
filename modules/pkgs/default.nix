@@ -22,6 +22,8 @@ in {
   imports = [
 
     ./custom/check-nvidia.nix
+    ./custom/new-smb-user.nix
+
   ];
 
   nixpkgs.config.allowUnfree = true;

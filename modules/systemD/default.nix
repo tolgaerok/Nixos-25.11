@@ -9,5 +9,22 @@
       "r! /tmp/**/*"
     ];
 
+    user.services.megasync = {
+      description = "megasync";
+      wantedBy = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.megasync}/bin/megasync";
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+    };
+
   };
 }
+
+# Notes:
+# systemctl --user status megasync --no-pager
+# systemctl --user restart megasync
+# systemctl --user stop megasync

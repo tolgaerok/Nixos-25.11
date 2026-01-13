@@ -15,8 +15,8 @@
     tmp.useTmpfs = true;
 
     # Kernel
-    # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_xanmod_latest;
     
     # Plymouth
     plymouth = {

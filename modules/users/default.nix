@@ -124,35 +124,35 @@ in {
     #---------------------------------------------
     # Create AutoStart shortcuts
     #---------------------------------------------
-    megasync-start = {
-      text = ''
-        autostart_dir="/home/${name}/.config/autostart"
-        desktop_file="$autostart_dir/megasync.desktop"
-            
-        # create autostart directory if it doesn't exist
-        if [ ! -d "$autostart_dir" ]; then
-          mkdir -p "$autostart_dir"
-          chown ${name}:users "$autostart_dir"
-          chmod 755 "$autostart_dir"
-        fi
-
-        # create desktop file
-        cat << EOF > "$desktop_file"
-        [Desktop Entry]
-        Type=Application
-        Name=MEGAsync
-        Exec=megasync
-        Icon=mega
-        Terminal=false
-        X-GNOME-Autostart-enabled=true
-        EOF
-            
-        # set ownership and make executable
-        chown ${name}:users "$desktop_file"
-        chmod 755 "$desktop_file"
-      '';
-      deps = [ ];
-    };
+    #megasync-start = {
+    #  text = ''
+    #    autostart_dir="/home/${name}/.config/autostart"
+    #    desktop_file="$autostart_dir/megasync.desktop"
+    #        
+    #    # create autostart directory if it doesn't exist
+    #    if [ ! -d "$autostart_dir" ]; then
+    #      mkdir -p "$autostart_dir"
+    #      chown ${name}:users "$autostart_dir"
+    #      chmod 755 "$autostart_dir"
+    #    fi
+    #
+    #    # create desktop file
+    #    cat << EOF > "$desktop_file"
+    #    [Desktop Entry]
+    #    Type=Application
+    #    Name=MEGAsync
+    #    Exec=megasync
+    #    Icon=mega
+    #    Terminal=false
+    #    X-GNOME-Autostart-enabled=true
+    #    EOF
+    #        
+    #    # set ownership and make executable
+    #    chown ${name}:users "$desktop_file"
+    #    chmod 755 "$desktop_file"
+    #  '';
+    #  deps = [ ];
+    #};
 
   };
 }
