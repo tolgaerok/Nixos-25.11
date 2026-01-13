@@ -172,3 +172,7 @@
     };
   };
 }
+
+
+# Notes
+# docker exec -it vscode shellcheck --version && docker exec -it vscode shfmt --version

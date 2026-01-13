@@ -23,6 +23,7 @@ in {
 
     ./custom/check-nvidia.nix
     ./custom/new-smb-user.nix
+    ./custom/my-gitup.nix
 
   ];
 
