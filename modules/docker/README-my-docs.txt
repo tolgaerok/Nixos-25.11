@@ -5,18 +5,67 @@
 ╔═══════════════════════════════════════════╗
 ║                  localhost                ║
 ╚═══════════════════════════════════════════╝
+
 VS Code:
 https://localhost:8443  (master password)
 
+# install shfmt into vscode docker
+# pull official image
+docker pull mvdan/shfmt:v3
+
+# install shfmt binary into vscode container
+docker exec -it vscode bash -c "
+  curl -fsSL https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64 -o /usr/local/bin/shfmt && 
+  chmod +x /usr/local/bin/shfmt
+"
+
+docker exec -it vscode bash -c "
+  apt-get update && 
+  apt-get install -y shellcheck wget && 
+  wget https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64 -O /usr/local/bin/shfmt && 
+  chmod +x /usr/local/bin/shfmt
+"
+
+# verify both work
+docker exec -it vscode shellcheck --version
+docker exec -it vscode shfmt --version
+# verify it works
+docker exec -it vscode shfmt --version
+
+# Restart container: 
+docker restart vscode
+
+# further updates
+docker exec -it debian-test bash
+
+if ! command -v shellcheck &> /dev/null; then
+    apt-get update
+    apt-get install -y shellcheck wget
+fi
+
+if ! command -v shfmt &> /dev/null; then
+    wget -q https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64 -O /usr/local/bin/shfmt
+    chmod +x /usr/local/bin/shfmt
+fi
+
+
++ ============================================================================================================================ +
+
 Portainer: http://localhost:9000
 Restart portainer: docker restart portainer
+
++ ============================================================================================================================ +
 
 Grafana:
 http://localhost:3000
 (default: admin/admin, forces password change)
 
++ ============================================================================================================================ +
+
 Prometheus:
 http://localhost:9090
+
++ ============================================================================================================================ +
 
 
 ╔═══════════════════════════════════════════╗
