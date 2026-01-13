@@ -80,10 +80,11 @@ in {
     video-trimmer
 
     # KDE / Qt
-    kdePackages.kate
-    kdePackages.kde-cli-tools
     # kdePackages.kpipewire
     # libsForQt5.kpipewire
+    kdePackages.kate
+    kdePackages.kde-cli-tools
+    kdePackages.kwrited
     qt5.qtbase
     qt5.qtwayland
 
