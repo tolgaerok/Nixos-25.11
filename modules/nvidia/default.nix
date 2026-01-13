@@ -6,15 +6,18 @@ in {
   options.drivers.nvidia = { enable = mkEnableOption "Enable Nvidia Drivers"; };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = [
+
+      "nvidia"
+    ];
 
     hardware.nvidia = {
       modesetting.enable = true;
       nvidiaPersistenced = true;
       nvidiaSettings = true;
-      open = false;
+      open = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
-      powerManagement.enable = true;
+      powerManagement.enable = false;
       powerManagement.finegrained = false;
     };
 

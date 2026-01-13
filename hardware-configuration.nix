@@ -22,10 +22,15 @@
 
     # Kernel parameters
     kernel.sysctl = {
-      "vm.swappiness" = 10;
-      "vm.vfs_cache_pressure" = 50;
       "net.core.default_qdisc" = "fq";
       "net.ipv4.tcp_congestion_control" = "bbr";
+      "vm.swappiness" = 10;
+      "vm.vfs_cache_pressure" = 50;
+
+      # SSD tuning - conservative
+      "vm.dirty_background_ratio" = 10;
+      "vm.dirty_ratio" = 20;
+      "vm.dirty_writeback_centisecs" = 300;
     };
 
     kernelParams = [
@@ -41,22 +46,20 @@
       "intel_iommu=on"
       "iommu=pt"
 
-      # IRQ configuration
-      "irqaffinity=0-7"
-      "threadirqs"
+      # IRQ configuration      
       "nmi-watchdog=0"
       "noirqdebug"
 
       # NVIDIA drivers
+      "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 
-      # Boot display
+      # Boot display and logging
       "quiet"
       "splash"
       "loglevel=3"
-      "fbcon=nodefer"
       "logo.nologo"
+      "fbcon=nodefer"
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
       "udev.log_level=3"
@@ -64,24 +67,32 @@
 
       # Video and zswap
       "video.allow_duplicates=1"
-      "zswap.enabled=1"
       "zswap.compressor=lz4"
-      "zswap.zpool=zsmalloc"
+      "zswap.enabled=1"
       "zswap.max_pool_percent=10"
+      "zswap.zpool=zsmalloc"
     ];
 
     # Initial ramdisk
     initrd = {
       availableKernelModules = [
 
-        "xhci_pci"
         "ahci"
-        "usbhid"
-        "uas"
         "sd_mod"
         "sr_mod"
+        "uas"
+        "usbhid"
+        "xhci_pci"
       ];
-      kernelModules = [ ];
+      kernelModules = [
+
+        # early KMS and faster boot
+        # Uncomment if you want faster boot-to-display and better Plymouth support
+        "nvidia"
+        "nvidia_drm"
+        "nvidia_modeset"
+        "nvidia_uvm"
+      ];
     };
   };
 
@@ -105,8 +116,8 @@
       fsType = "vfat";
       options = [
 
-        "fmask=0077"
         "dmask=0077"
+        "fmask=0077"
       ];
     };
   };

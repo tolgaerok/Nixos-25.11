@@ -19,7 +19,10 @@ let
     echo "🔑 SSH key generated and added to agent."
   '';
 in {
-  # imports = [ ./custom-pkgs ];
+  imports = [
+
+    ./custom/check-nvidia.nix
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -88,7 +91,7 @@ in {
     variety
     wpsoffice
     element-desktop
-    
+
     # Compression & Archives
     atool
     file

@@ -11,12 +11,13 @@
 
     # Clean tmpfs on boot
     tmp.cleanOnBoot = true;
-    tmp.useTmpfs = true;
     tmp.tmpfsSize = "30%";
+    tmp.useTmpfs = true;
 
     # Kernel
-    kernelPackages = pkgs.linuxPackages_latest;
-
+    # kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    
     # Plymouth
     plymouth = {
       enable = true;

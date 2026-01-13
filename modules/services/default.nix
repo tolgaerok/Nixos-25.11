@@ -8,10 +8,14 @@
         KERNEL=="rtc0", GROUP="audio"
         KERNEL=="hpet", GROUP="audio"
 
-        # Set scheduler for SSDs (fixed typo: bqf -> bfq)
-        ACTION=="add|change", KERNEL=="sd[a-z]", TEST=="queue/scheduler", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
-        ACTION=="add|change", KERNEL=="mmcblk[0-9]", TEST=="queue/scheduler", ATTR{queue/scheduler}="none"
-        ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", TEST=="queue/scheduler", ATTR{queue/scheduler}="none"
+        # SSD optimization - aggressive desktop tuning (8GB read-ahead, BFQ scheduler)
+        ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="8192", ATTR{queue/iosched/low_latency}="1", ATTR{queue/add_random}="0", ATTR{queue/nr_requests}="256"
+
+        # NVMe optimization - no scheduler needed (none), aggressive read-ahead
+        ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none", ATTR{queue/read_ahead_kb}="8192", ATTR{queue/add_random}="0", ATTR{queue/nr_requests}="256"
+
+        # eMMC/SD cards - no scheduler
+        ACTION=="add|change", KERNEL=="mmcblk[0-9]", ATTR{queue/scheduler}="none"
 
         # Power management (desktop aggressive = keep devices active)
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
@@ -37,6 +41,12 @@
     smartd = {
       enable = true;
       autodetect = true;
+    };
+
+    # SMART metrics exporter
+    prometheus.exporters.smartctl = {
+      enable = true;
+      maxInterval = "20s";
     };
 
     # SSH
