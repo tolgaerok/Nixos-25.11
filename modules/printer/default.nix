@@ -1,16 +1,9 @@
 { config, lib, pkgs, ... }:
-
 let
   extraBackends = [ pkgs.epkowa ];
 
-  # Printer drivers for HP LaserJet 600 M601
-  printerDrivers = [
-
-    pkgs.gutenprint
-    pkgs.gutenprintBin
-    pkgs.hplip
-    pkgs.hplipWithPlugin
-  ];
+  printerDrivers =
+    [ pkgs.gutenprint pkgs.gutenprintBin pkgs.hplip pkgs.hplipWithPlugin ];
 in {
 
   # Scanner drivers
@@ -23,5 +16,14 @@ in {
   services.printing = {
     enable = true;
     drivers = printerDrivers;
+  };
+
+  # Network printer discovery
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    allowInterfaces = [ "wlp2s0" ]; # Prevent Docker spam
+    denyInterfaces = [ "docker0" "br-*" "veth*" ];
   };
 }

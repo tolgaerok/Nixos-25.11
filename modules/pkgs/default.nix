@@ -22,9 +22,10 @@ in {
   imports = [
 
     ./custom/check-nvidia.nix
+    ./custom/delete-gens.nix
+    ./custom/display-linuxtweaks.nix
     ./custom/my-gitup.nix
     ./custom/new-smb-user.nix
-    ./custom/delete-gens.nix
 
   ];
 
@@ -89,13 +90,17 @@ in {
     qt5.qtwayland
 
     # Browsers
-    google-chrome
+    # google-chrome
 
     # Office / Productivity
     megasync
     variety
     wpsoffice
-    element-desktop
+    # element-desktop
+    system-config-printer
+    gsettings-desktop-schemas
+    pkg-config
+    cups
 
     # Compression & Archives
     atool
@@ -132,8 +137,10 @@ in {
     lshw
     ncdu
     nix-direnv
+    nix-direnv
     nixfmt-classic
     nixfmt-rfc-style
+    nixpkgs-fmt
     nixos-option
     pciutils
     pkg-config

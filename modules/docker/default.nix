@@ -14,7 +14,12 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ docker-compose lazydocker ];
+  environment.systemPackages = with pkgs; [
+
+    docker-compose
+    lazydocker
+
+  ];
 
   users.users.tolga.extraGroups = [ "docker" ];
 
@@ -172,7 +177,6 @@
     };
   };
 }
-
 
 # Notes
 # docker exec -it vscode shellcheck --version && docker exec -it vscode shfmt --version
