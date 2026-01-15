@@ -1,126 +1,94 @@
+# networking/default.nix
+# tolga erok
+# 13 jan 26
+# network and firewall config
+
 { config, options, lib, pkgs, ... }: {
 
   networking = {
     enableIPv6 = true;
     networkmanager.enable = true;
-
-    # Configure firewall to your likings:
+    
     firewall = {
+      enable = true;  # enabled with custom rules
       allowPing = true;
-
-      # I want to configure my own ports
-      enable = false;
-
-      #---------------------------------------------------------------------
-      # Curiously, `services.samba` does not automatically open
-      # the needed ports in the firewall. Manualy open ports = [ 139 445 ]
-      #---------------------------------------------------------------------
-
+      
+      # tcp ports
       allowedTCPPorts = [
-        # FTP
-        21
-        # DNS
-        53
-        # HTTP
-        80
-        # HTTPS
-        443
-        # IMAP
-        143
-        # LDAP
-        389
-        # Samba
-        139
-        445
-        # SMTP
-        25
-        # SSH
-        22
-        # PostgreSQL
-        5432
-        # MySQL/MariaDB
-        3306
-        3307
-        # NFS
-        111
-        2049
-        # Docker
-        2375
-        # Syncthing port
-        22000
-        # Transmission
-        9091
-        60450
-        # For gnomecast server
-        80
-        8010
-        8888
-        # wsdd : samba
-        5357
-        # Open KDE Connect
-        {
-          from = 1714;
-          to = 1764;
-        }
-        # Teamviewer
-        # 5938
-        8200
-        59010
-        59011
-
+        # web services
+        80      # http
+        443     # https
+        8010    # gnomecast
+        8888    # gnomecast alt
+        
+        # docker services
+        8443    # vscode
+        9000    # portainer
+        3000    # grafana
+        9090    # prometheus
+        
+        # file sharing
+        21      # ftp
+        22      # ssh
+        139     # samba netbios
+        445     # samba smb
+        2049    # nfs
+        111     # nfs rpcbind
+        5357    # wsdd samba discovery
+        
+        # databases
+        3306    # mysql
+        3307    # mariadb
+        5432    # postgresql
+        
+        # services
+        25      # smtp
+        53      # dns
+        143     # imap
+        389     # ldap
+        2375    # docker api
+        9091    # transmission web
+        60450   # transmission peer
+        22000   # syncthing
+        
+        # remote access
+        8200    # teamviewer
+        59010   # teamviewer
+        59011   # teamviewer
       ];
-
-      allowedTCPPortRanges = [{
-        from = 32765;
-        to = 32769;
-      }];
-
+      
+      # tcp port ranges
+      allowedTCPPortRanges = [
+        { from = 1714; to = 1764; }   # kde connect
+        { from = 32765; to = 32769; } # nfs high ports
+      ];
+      
+      # udp ports
       allowedUDPPorts = [
-        # DNS
-        53
-        # NetBIOS Name Service
-        137
-        # NetBIOS Datagram Service
-        138
-        # NFS
-        111
-        2049
-        # wsdd : samba
-        3702
-        # For device discovery
-        5353
-        # Syncthing port
-        21027
-        # Teamviewer
-        # 5938
-        # Open KDE Connect
-        {
-          from = 1714;
-          to = 1764;
-        }
-
-        # Syncthing port
-        22000
-        8200
-        59010
-        59011
-
+        53      # dns
+        137     # netbios name
+        138     # netbios datagram
+        111     # nfs rpcbind
+        2049    # nfs
+        3702    # wsdd discovery
+        5353    # mdns/avahi
+        21027   # syncthing discovery
+        22000   # syncthing
+        8200    # teamviewer
+        59010   # teamviewer
+        59011   # teamviewer
       ];
-
-      allowedUDPPortRanges = [{
-        from = 32765;
-        to = 32769;
-      }];
-
-      #---------------------------------------------------------------------
-      # Adding a rule to the iptables firewall to allow NetBIOS name
-      # resolution traffic on UDP port 137
-      #---------------------------------------------------------------------
-
-      extraCommands =
-        "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
-
+      
+      # udp port ranges
+      allowedUDPPortRanges = [
+        { from = 1714; to = 1764; }   # kde connect
+        { from = 32765; to = 32769; } # nfs high ports
+      ];
+      
+      # netbios name resolution helper
+      extraCommands = ''
+        iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
+      '';
     };
   };
-
 }
