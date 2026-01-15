@@ -5,11 +5,11 @@
       enable = true;
       extraRules = ''
         # Sound devices to audio group
-        KERNEL=="rtc0", GROUP="audio"
-        KERNEL=="hpet", GROUP="audio"
+        # KERNEL=="rtc0", GROUP="audio"
+        # KERNEL=="hpet", GROUP="audio"
 
         # SSD optimization - aggressive desktop tuning (8GB read-ahead, BFQ scheduler)
-        ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="8192", ATTR{queue/iosched/low_latency}="1", ATTR{queue/add_random}="0", ATTR{queue/nr_requests}="256"
+        ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="2048", ATTR{queue/iosched/low_latency}="1", ATTR{queue/add_random}="0", ATTR{queue/nr_requests}="256"
 
         # NVMe optimization - no scheduler needed (none), aggressive read-ahead
         ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none", ATTR{queue/read_ahead_kb}="8192", ATTR{queue/add_random}="0", ATTR{queue/nr_requests}="256"
@@ -24,14 +24,14 @@
     };
 
     # System services
+    devmon.enable = true;
     envfs.enable = true;
     fwupd.enable = true;
+    geoclue2.enable = true;
     gvfs.enable = true;
     resolved.enable = true;
     rpcbind.enable = true;
     udisks2.enable = true;
-
-    devmon = { enable = true; };
 
     # GNOME keyring (secret service)
     gnome.gnome-keyring.enable = true;
@@ -68,12 +68,17 @@
     };
 
     # Display and desktop
-    displayManager = {
-      sddm.enable = true;
-      defaultSession =
-        "plasmax11"; 
+    displayManager.sddm = {
+      enable = true;
+      autoNumlock = true;
+      # defaultSession = "plasmax11";
     };
     desktopManager.plasma6.enable = true;
 
+  };
+
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM = "wayland;xcb";
   };
 }

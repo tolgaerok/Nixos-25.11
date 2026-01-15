@@ -16,6 +16,7 @@
 
       "kvm-intel"
       "tcp_bbr"
+      "lz4"
     ];
 
     extraModulePackages = [ ];
@@ -67,10 +68,7 @@
 
       # Video and zswap
       "video.allow_duplicates=1"
-      "zswap.compressor=lz4"
-      "zswap.enabled=1"
-      "zswap.max_pool_percent=10"
-      "zswap.zpool=zsmalloc"
+
     ];
 
     # Initial ramdisk
@@ -105,7 +103,7 @@
       # ---------------------------------------------
       options = [
 
-        "discard" # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
+        # "discard" # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
         "noatime" # Disables updating access times for files, improving file system performance by reducing write operations.
 
       ];

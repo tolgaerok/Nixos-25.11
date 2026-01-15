@@ -2,7 +2,9 @@
 
   # Locale and timezone
   time.timeZone = "Australia/Perth";
+
   i18n.defaultLocale = "en_AU.UTF-8";
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_AU.UTF-8";
     LC_IDENTIFICATION = "en_AU.UTF-8";

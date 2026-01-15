@@ -2,13 +2,13 @@
 
 {
   imports = [
-
     ./boot
     ./docker
     ./firewall
     ./flatpaks
     ./fonts
     ./git
+    ./hw-clock
     ./locale
     ./memory
     ./mnt
@@ -16,6 +16,7 @@
     ./nix
     ./nvidia
     ./pkgs
+    ./portals
     ./printer
     ./programs
     ./samba
@@ -23,7 +24,6 @@
     ./sound
     ./systemD
     ./users
-
   ];
 
 }

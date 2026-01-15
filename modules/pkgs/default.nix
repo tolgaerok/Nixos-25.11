@@ -33,10 +33,12 @@ in {
 
   environment.systemPackages = with pkgs; [
     # Core Tools
+    btrfs-progs
     busybox
     curl
     direnv
     distrobox
+    efibootmgr
     figlet
     fortune
     git
@@ -80,12 +82,24 @@ in {
     simplescreenrecorder
     video-trimmer
 
+    # Themes and icons
+    adwaita-icon-theme
+    adwaita-qt
+    bibata-cursors
+    catppuccin-gtk
+    papirus-icon-theme
+
     # KDE / Qt
     # kdePackages.kpipewire
     # libsForQt5.kpipewire
     kdePackages.kate
     kdePackages.kde-cli-tools
     kdePackages.kwrited
+    kdePackages.qt6ct
+    kdePackages.qtstyleplugin-kvantum # kvantum
+    kdePackages.qtwayland
+    libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum # kvantum
     qt5.qtbase
     qt5.qtwayland
 
@@ -185,6 +199,7 @@ in {
     gobject-introspection.dev
     gtk3
     gtk3.dev
+    gtk-engine-murrine # for gtk themes
     gtk4
     libGL
     libxkbcommon

@@ -23,16 +23,36 @@ in {
 
   fonts.packages = with pkgs; [
     corefonts
+    dejavu_fonts
     fira-code
     fira-code-symbols
+    fira-sans
     font-awesome
+    hackgen-nf-font
+    ibm-plex
+    inter
     jetbrains-mono
     liberation_ttf
+    lilex
+    maple-mono.NF
     material-icons
+    minecraftia
+    nerd-fonts.blex-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.im-writing
     nerd-fonts.jetbrains-mono
+    nerd-fonts.lilex
     noto-fonts
     noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     noto-fonts-color-emoji
+    noto-fonts-monochrome-emoji
+    powerline-fonts
+    roboto
+    roboto-mono
+    symbola
+    terminus_font
+    victor-mono
     wineWowPackages.fonts
     wpsFonts
   ];
