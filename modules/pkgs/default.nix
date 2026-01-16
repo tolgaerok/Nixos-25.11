@@ -25,6 +25,7 @@ in {
     ./custom/delete-gens.nix
     ./custom/display-linuxtweaks.nix
     ./custom/my-gitup.nix
+    ./custom/mynix.nix
     ./custom/new-smb-user.nix
 
   ];
