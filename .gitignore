@@ -1,2 +1,3 @@
 secrets.nix
 default copy.nix
+smb-secrets
