@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
 
 # Tolga Erok
 # 3/11/2023
@@ -46,9 +41,6 @@
 
   # NVIDIA
   drivers.nvidia.enable = true;
-
-  # UNFREE_ALLOWANCE
-  nixpkgs.config.allowUnfree = true;
 
   # SYSTEM_VARIBLES
   environment.variables = {

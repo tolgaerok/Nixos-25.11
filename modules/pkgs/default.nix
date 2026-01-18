@@ -29,6 +29,9 @@ in {
     ./custom/new-smb-user.nix
   ];
 
+  # UNFREE_ALLOWANCE
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     # Core essentials
     curl

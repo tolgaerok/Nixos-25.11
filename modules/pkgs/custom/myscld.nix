@@ -182,11 +182,11 @@ let
 
 in {
   environment.systemPackages = with pkgs; [
-    my-scld
-    yad
     ffmpeg
-    wget
     imagemagick
+    my-scld
     python-with-mutagen
+    wget
+    yad
   ];
 }

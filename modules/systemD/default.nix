@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ config, lib, pkgs, ... }: {
   systemd = {
     tmpfiles.rules = [
       "D! /tmp 1777 root root 0"
@@ -14,6 +8,44 @@
       "d /var/spool/samba 1777 root root -"
       "r! /tmp/**/*"
     ];
+
+    settings.Manager = {
+      DefaultLimitNOFILE = "1048576";
+      DefaultStandardError = "null";
+      DefaultStandardOutput = "null";
+      DefaultTimeoutStopSec = "1s";
+      ShowStatus = "no";
+    };
+
+    services.avahi-daemon-setup = {
+      description = "Create Avahi Runtime Directory";
+      before = [ "avahi-daemon.service" ];
+      requiredBy = [ "avahi-daemon.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.coreutils}/bin/mkdir -p /run/avahi-daemon";
+        ExecStartPost =
+          "${pkgs.coreutils}/bin/chown avahi:avahi /run/avahi-daemon";
+      };
+    };
+
+    services.avahi-daemon.preStart = lib.mkForce ''
+      rm -f /run/avahi-daemon/pid || true
+    '';
+
+    coredump.enable = true;
+
+    user.services.easyeffects = {
+      description = "easyeffects daemon";
+      wantedBy = [ "default.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart =
+          "${pkgs.flatpak}/bin/flatpak run --branch=stable --arch=x86_64 com.github.wwmm.easyeffects --gapplication-service";
+        Restart = "on-failure";
+      };
+    };
 
     user.services.megasync = {
       description = "megasync";
@@ -26,7 +58,6 @@
         RestartSec = "5s";
       };
     };
-
   };
 }
 

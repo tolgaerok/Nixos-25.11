@@ -7,14 +7,6 @@
   # 28/7/2025
   # ─────────────────────────────────────────────────────────
 
-  systemd = {
-    settings.Manager = {
-      DefaultTimeoutStopSec = "1s";
-      DefaultLimitNOFILE = "1048576";
-    };
-    coredump.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
     # Network & File Systems
     cifs-utils

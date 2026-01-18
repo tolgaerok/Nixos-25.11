@@ -21,11 +21,15 @@
         # Power management (desktop aggressive = keep devices active)
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
         ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="on"
+
+        # Block slow serial/TPM devices on my machine
+        SUBSYSTEM=="tty", KERNEL=="ttyS[0-3]", ENV{SYSTEMD_READY}="0"
+        SUBSYSTEM=="tpm", ENV{SYSTEMD_READY}="0"
       '';
     };
 
     # System services
-    # udisks2.enable = true;
+    udisks2.enable = true;
     # resolved.enable = true;
     devmon.enable = true;
     envfs.enable = true;

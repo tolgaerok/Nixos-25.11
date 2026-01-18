@@ -2,10 +2,8 @@
 
 with lib;
 
-let
-  name = "tolga";
-in
-{
+let name = "tolga";
+in {
   # --------------------------------------------------------------------
   # System optimisations and Nix configuration
   # --------------------------------------------------------------------
@@ -33,6 +31,7 @@ in
 
       # Use all available cores (0 = auto detect)
       cores = 0;
+      max-jobs = 8;
 
       # Relax sandboxing a bit for some builds
       sandbox = "relaxed";
@@ -49,6 +48,7 @@ in
 
       # How long nix should trust downloaded tarballs
       tarball-ttl = 300;
+      connect-timeout = 5;
 
       # Substitute caches to fetch prebuilt binaries
       substituters = [
@@ -73,8 +73,9 @@ in
     gc = {
       automatic = true;
       dates = "Mon 3:40";
-      randomizedDelaySec = "14m";
       options = "--delete-older-than 30d";
+      persistent = true;
+      randomizedDelaySec = "14m";
     };
   };
 }

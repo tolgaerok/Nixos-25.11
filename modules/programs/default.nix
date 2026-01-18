@@ -10,10 +10,7 @@
     mtr.enable = true;
     ssh.startAgent = true;
 
-    partition-manager = {
-
-      enable = true;
-    };
+    partition-manager = { enable = true; };
 
     gnupg.agent = {
       enable = true;
