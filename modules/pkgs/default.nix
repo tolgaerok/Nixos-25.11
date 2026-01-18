@@ -58,7 +58,6 @@ in
 
     # Productivity
     megasync
-    system-config-printer
     variety
     wpsoffice
 
@@ -77,7 +76,9 @@ in
     gcc
     ncdu
     nix-direnv
+    nixfmt-classic
     nixfmt-rfc-style
+    nixpkgs-fmt
     pciutils
     pkg-config
     ripgrep

@@ -8,6 +8,7 @@
 {
   virtualisation.docker = {
     enable = true;
+    enableOnBoot = false;
     autoPrune = {
       enable = true;
       dates = "weekly";
@@ -15,10 +16,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-
     docker-compose
     lazydocker
-
   ];
 
   users.users.tolga.extraGroups = [ "docker" ];
@@ -146,7 +145,7 @@
   # copy configs to home directory before docker-stack starts
   systemd.services.docker-stack-setup = {
     description = "copy docker configs to home directory";
-    wantedBy = [ "multi-user.target" ];
+    # wantedBy = [ "multi-user.target" ];  # Disabled - manual start only
     before = [ "docker-stack.service" ];
     serviceConfig = {
       Type = "oneshot";
@@ -161,12 +160,15 @@
     '';
   };
 
-  # auto-start my containers
+  # docker stack - manual start only
   systemd.services.docker-stack = {
     description = "docker compose stack";
-    after = [ "docker.service" "docker-stack-setup.service" ];
+    after = [
+      "docker.service"
+      "docker-stack-setup.service"
+    ];
     requires = [ "docker-stack-setup.service" ];
-    wantedBy = [ "multi-user.target" ];
+    # wantedBy = [ "multi-user.target" ];  # Disabled - manual start only
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -179,4 +181,8 @@
 }
 
 # Notes
+# Manual start: sudo systemctl start docker-stack.service
+# Manual stop:  sudo systemctl stop docker-stack.service
+
+# Check status: systemctl status docker-stack.service
 # docker exec -it vscode shellcheck --version && docker exec -it vscode shfmt --version

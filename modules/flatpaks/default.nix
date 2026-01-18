@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 
 }:
 
@@ -7,41 +11,14 @@
   services = {
     flatpak = {
       enable = true;
-
     };
-
   };
 
   environment.systemPackages = with pkgs; [
-
     # Flatpak & Desktop Portal
     flatpak
     gnomeExtensions.mock-tray
     xdg-desktop-portal
-
-    vscode
-    vscode-extensions.brettm12345.nixfmt-vscode
-    vscode-extensions.foxundermoon.shell-format
-    vscode-extensions.mkhl.direnv
-
-    # Bash formatting
-    shfmt
-    shellcheck
-
-    nix-direnv
-    nixfmt-classic
-    nixfmt-rfc-style
-    nixpkgs-fmt
-
-    # Office / Productivity
-    megasync
-    variety
-    wpsoffice
-
-    system-config-printer
-    gsettings-desktop-schemas
-
-    cups
   ];
 
   system.activationScripts.installFlatpaks.text = ''

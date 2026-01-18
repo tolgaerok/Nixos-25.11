@@ -1,12 +1,28 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   extraBackends = [ pkgs.epkowa ];
 
-  printerDrivers =
-    [ pkgs.gutenprint pkgs.gutenprintBin pkgs.hplip pkgs.hplipWithPlugin ];
-in {
+  printerDrivers = [
+    pkgs.gutenprint
+    pkgs.gutenprintBin
+    pkgs.hplip
+    pkgs.hplipWithPlugin
+  ];
+in
+{
 
-  # Scanner drivers
+  environment.systemPackages = with pkgs; [
+    # Core essentials
+    cups
+    system-config-printer
+
+  ];
+
   hardware.sane = {
     enable = true;
     extraBackends = extraBackends;
@@ -20,11 +36,15 @@ in {
 
   # Network printer discovery
   services.avahi = {
+    allowInterfaces = [ "wlp2s0" ]; # Prevent Docker spam
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    allowInterfaces = [ "wlp2s0" ]; # Prevent Docker spam
-    denyInterfaces = [ "docker0" "br-*" "veth*" ];
+    denyInterfaces = [
+      "docker0"
+      "br-*"
+      "veth*"
+    ];
   };
 }
 
