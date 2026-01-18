@@ -1,10 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   my-nix = pkgs.writeScriptBin "my-nix" ''
     #!/usr/bin/env bash
     # Tolga Erok - NixOS System Management
-    # Updated: 15 Jan 2026
+    # Updated: 18 Jan 2026
 
     BLUE=$'\033[0;34m'
     CYAN=$'\033[0;36m'
@@ -34,13 +39,13 @@ let
       echo -e "''${CYAN}── System Rebuild ──''${NC}"
       echo -e " ''${GREEN}1''${NC})  nixos-rebuild switch          Apply configuration changes"
       echo -e " ''${GREEN}2''${NC})  nixos-rebuild test            Test config without switching"
-      echo -e " ''${GREEN}3''${NC})  nixos-rebuild switch --upgrade   Update & rebuild system"
+      echo -e " ''${GREEN}3''${NC})  Full system update            Update channels + rebuild"
       echo ""
       echo -e "''${CYAN}── Cleanup & Optimization ──''${NC}"
-      echo -e " ''${GREEN}4''${NC})  Collect garbage (-d)          Remove old packages"
+      echo -e " ''${GREEN}4''${NC})  Collect garbage (30 days)     Remove old packages (safe)"
       echo -e " ''${GREEN}5''${NC})  Delete old generations        Clean boot menu entries"
       echo -e " ''${GREEN}6''${NC})  Optimize Nix store            Deduplicate files"
-      echo -e " ''${GREEN}7''${NC})  Full cleanup                  All-in-one maintenance"
+      echo -e " ''${GREEN}7''${NC})  Full cleanup (safe)           All-in-one maintenance"
       echo ""
       echo -e "''${CYAN}── System Info ──''${NC}"
       echo -e " ''${GREEN}8''${NC})  List generations              Show system versions"
@@ -50,7 +55,8 @@ let
       echo -e "''${CYAN}── Advanced ──''${NC}"
       echo -e "''${GREEN}11''${NC})  Check store issues            Find broken symlinks"
       echo -e "''${GREEN}12''${NC})  Update channels               Refresh package sources"
-      echo -e "''${GREEN}13''${NC})  Rollback to previous gen     Undo last rebuild"
+      echo -e "''${GREEN}13''${NC})  Rollback to previous gen      Undo last rebuild"
+      echo -e "''${GREEN}14''${NC})  Nuclear cleanup (ALL gens)    Delete everything old"
       echo ""
       echo -e "''${RED}0''${NC})  Exit"
       echo ""
@@ -58,15 +64,48 @@ let
       echo -n -e "''${YELLOW}Select option: ''${NC}"
     }
 
-    # Full system cleanup
+    # Full system update (system + user)
+    full_update() {
+      echo -e "''${CYAN}Updating system and user channels...''${NC}\n"
+      run "nix-channel --update"
+      echo -e "''${CYAN}Updating user channels...''${NC}\n"
+      nix-channel --update
+      echo -e "''${CYAN}Rebuilding system with updates...''${NC}\n"
+      run "nixos-rebuild switch --upgrade"
+      echo -e "''${CYAN}Updating user packages...''${NC}\n"
+      nix-env -u '*'
+      echo -e "''${GREEN}✓ Update complete!''${NC}"
+      read -p "Press Enter to continue..."
+    }
+
+    # Full system cleanup (SAFE - keeps 7 days)
     full_cleanup() {
-      echo -e "''${CYAN}Starting full system cleanup...''${NC}\n"
-      run "nix-collect-garbage --delete-old"
-      run "nix-collect-garbage -d"
+      echo -e "''${CYAN}Starting safe system cleanup...''${NC}\n"
+      run "nix-collect-garbage --delete-older-than 30d"
       run "nix store optimise"
       run "/run/current-system/bin/switch-to-configuration boot"
       run "fstrim -av"
       echo -e "''${GREEN}✓ Cleanup complete!''${NC}"
+      read -p "Press Enter to continue..."
+    }
+
+    # Nuclear cleanup (DELETE ALL)
+    nuclear_cleanup() {
+      echo -e "''${RED}⚠️  WARNING: This will delete ALL old generations!''${NC}"
+      echo -e "''${RED}You will lose rollback ability!''${NC}\n"
+      echo -n -e "''${YELLOW}Type 'DELETE ALL' to confirm: ''${NC}"
+      read confirm
+      if [ "$confirm" = "DELETE ALL" ]; then
+        echo -e "''${CYAN}Starting nuclear cleanup...''${NC}\n"
+        run "nix-collect-garbage --delete-old"
+        run "nix-collect-garbage -d"
+        run "nix store optimise"
+        run "/run/current-system/bin/switch-to-configuration boot"
+        run "fstrim -av"
+        echo -e "''${GREEN}✓ Nuclear cleanup complete!''${NC}"
+      else
+        echo -e "''${YELLOW}Cancelled.''${NC}"
+      fi
       read -p "Press Enter to continue..."
     }
 
@@ -113,6 +152,16 @@ let
       read -p "Press Enter to continue..."
     }
 
+    # Update channels (both system and user)
+    update_channels() {
+      echo -e "''${CYAN}Updating system channels...''${NC}\n"
+      run "nix-channel --update"
+      echo -e "''${CYAN}Updating user channels...''${NC}\n"
+      nix-channel --update
+      echo -e "''${GREEN}✓ Channels updated!''${NC}"
+      read -p "Press Enter to continue..."
+    }
+
     # Main loop
     while true; do
       menu
@@ -122,8 +171,8 @@ let
       case $choice in
         1) run "nixos-rebuild switch" ;;
         2) run "nixos-rebuild test" ;;
-        3) run "nixos-rebuild switch --upgrade" ;;
-        4) run "nix-collect-garbage -d" ;;
+        3) full_update ;;
+        4) run "nix-collect-garbage --delete-older-than 30d" ;;
         5) delete_gen ;;
         6) run "nix store optimise" ;;
         7) full_cleanup ;;
@@ -131,11 +180,12 @@ let
         9) disk_usage ;;
         10) run "nix-env -q"; read -p "Press Enter..." ;;
         11) check_store ;;
-        12) run "nix-channel --update" ;;
+        12) update_channels ;;
         13) 
           echo -e "''${YELLOW}Rolling back to previous generation...''${NC}"
           run "nixos-rebuild switch --rollback"
           ;;
+        14) nuclear_cleanup ;;
         0) 
           echo -e "''${CYAN}Goodbye!''${NC}"
           exit 0 
@@ -148,4 +198,7 @@ let
     done
   '';
 
-in { environment.systemPackages = [ my-nix ]; }
+in
+{
+  environment.systemPackages = [ my-nix ];
+}
