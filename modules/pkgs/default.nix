@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
 with lib;
 let
   # SSH tools paths
@@ -23,14 +18,14 @@ let
     ${sshAdd} $HOME/.ssh/id_ed25519
     echo "🔑 SSH key generated and added to agent."
   '';
-in
-{
+in {
   imports = [
     ./custom/check-nvidia.nix
     ./custom/delete-gens.nix
     ./custom/display-linuxtweaks.nix
     ./custom/my-gitup.nix
     ./custom/mynix.nix
+    ./custom/myscld.nix
     ./custom/new-smb-user.nix
   ];
 
