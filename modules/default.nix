@@ -8,9 +8,12 @@
 {
   imports = [
     ./boot
+    ./docker
     ./firewall
     ./flatpaks
     ./fonts
+    ./git
+    ./hw-clock
     ./kde
     ./locale
     ./memory
@@ -26,9 +29,5 @@
     ./sound
     ./systemD
     ./users
-    # ./docker
-    ./git
-    #./hw-clock
-    # ./portals
   ];
 }
