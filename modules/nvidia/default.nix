@@ -1,9 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.drivers.nvidia;
+let
+  cfg = config.drivers.nvidia;
 
-in {
-  options.drivers.nvidia = { enable = mkEnableOption "Enable Nvidia Drivers"; };
+in
+{
+  options.drivers.nvidia = {
+    enable = mkEnableOption "Enable Nvidia Drivers";
+  };
 
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -25,7 +34,10 @@ in {
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
+
         # vaapiVdpau
+        intel-media-driver # Intel iGPU accel
+        intel-vaapi-driver # Intel VA-API
         libva
         libva-utils
         libva-vdpau-driver
@@ -33,9 +45,6 @@ in {
         libvdpau-va-gl
         nvidia-vaapi-driver
         vdpauinfo
-        # intel-media-driver # Intel iGPU accel
-        intel-vaapi-driver # Intel VA-API
-
       ];
     };
 
