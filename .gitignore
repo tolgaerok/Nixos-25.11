@@ -1,6 +1,6 @@
 secrets.nix
 default copy.nix
-smb-secretsmodules/samba/smb-secrets
+smb-secrets
 /modules/samba/smb-secrets
 portals
 modules/samba/smb-secrets
