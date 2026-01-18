@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   # SSH tools paths
@@ -18,7 +23,8 @@ let
     ${sshAdd} $HOME/.ssh/id_ed25519
     echo "🔑 SSH key generated and added to agent."
   '';
-in {
+in
+{
   imports = [
     ./custom/check-nvidia.nix
     ./custom/delete-gens.nix
@@ -52,9 +58,9 @@ in {
 
     # Productivity
     megasync
+    system-config-printer
     variety
     wpsoffice
-    system-config-printer
 
     # Compression (essential only)
     gzip
@@ -67,8 +73,8 @@ in {
     restic
 
     # Development
-    gcc
     fastfetch
+    gcc
     ncdu
     nix-direnv
     nixfmt-rfc-style
@@ -83,12 +89,12 @@ in {
     # Python development
     # python3Full
     python312Packages.pip
-    python312Packages.virtualenv
     python312Packages.setuptools
+    python312Packages.virtualenv
 
     # Bash tools
-    shfmt
     shellcheck
+    shfmt
 
     # System utilities & fun
     duf
