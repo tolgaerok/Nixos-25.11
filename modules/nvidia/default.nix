@@ -33,6 +33,8 @@ in {
         libvdpau-va-gl
         nvidia-vaapi-driver
         vdpauinfo
+        # intel-media-driver # Intel iGPU accel
+        intel-vaapi-driver # Intel VA-API
 
       ];
     };

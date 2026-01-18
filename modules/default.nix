@@ -1,14 +1,17 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
     ./boot
-    ./docker
     ./firewall
     ./flatpaks
     ./fonts
-    ./git
-    ./hw-clock
+    ./kde
     ./locale
     ./memory
     ./mnt
@@ -16,7 +19,6 @@
     ./nix
     ./nvidia
     ./pkgs
-    ./portals
     ./printer
     ./programs
     ./samba
@@ -24,6 +26,9 @@
     ./sound
     ./systemD
     ./users
+    # ./docker
+    ./git
+    #./hw-clock
+    # ./portals
   ];
-
 }

@@ -5,30 +5,32 @@ let
 in {
   users = {
     users.${name} = {
-      createHome = true;
+      # createHome = true;
+      # homeMode = "0755";
+      # uid = 1000;
       description = "KingTolga";
       home = "/home/${name}";
-      homeMode = "0755";
       isNormalUser = true;
-      uid = 1000;
 
       extraGroups = [
-        "wheel" # sudo access
-        "networkmanager" # network control
-        "docker" # Docker access
-        "libvirtd" # VMs
         "audio" # audio devices
-        "video" # video devices
-        "input" # input devices
-        "scanner" # scanners
-        "lp" # printers
-        "samba" # Samba shares
-        "storage" # storage management
         "disk" # disk access
+        "docker" # Docker access
+        "input" # input devices
+        "libvirtd" # VMs
+        "lp" # printers
+        "networkmanager" # network control
+        "samba" # Samba shares
+        "scanner" # scanners
+        "storage" # storage management
         "systemd-journal" # view logs
+        "users"
+        "usershares"
+        "video" # video devices
+        "wheel" # sudo access
       ];
 
-      packages = with pkgs; [ kdePackages.kate home-manager ];
+      packages = with pkgs; [ home-manager ];
 
       hashedPassword =
         "$6$RkM04ju2XIwmd0Mz$/R4JlSLKNWPUeiIzd/.OXY805JvY35Oh4t/NIObZUFGts8xPmCwhYgWzfWNB6hVSOelFZwOs.MIRsrbdwOn.I0";
@@ -37,7 +39,6 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGaXQOMwKzMvs8Ex5qNniomFX60Zu7U2YcA0B0LO4HLm ${email}"
       ];
     };
-
     defaultUserShell = pkgs.bash;
   };
 
@@ -83,7 +84,6 @@ in {
       EOF
       chown ${name}:users /home/${name}/THANK-YOU
     '';
-
     nixos-ownership = ''
       # Set ownership of /etc/nixos to current user
       ${pkgs.coreutils}/bin/chown -R ${name}:users /etc/nixos

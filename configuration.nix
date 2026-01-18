@@ -42,9 +42,23 @@
   # NVIDIA
   drivers.nvidia.enable = true;
 
+  # UNFREE_ALLOWANCE
+  nixpkgs.config.allowUnfree = true;
+
+  # SYSTEM_VARIBLES
+  environment.variables = {
+    # QT_QPA_PLATFORMTHEME = "qt5ct";
+    # QT_STYLE_OVERRIDE = "kvantum";
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM = "wayland;xcb";
+  };
+
   # STATE_VERSION
   system.stateVersion = "25.11";
 }
 
 # Notes:
 # sudo chown -R $(whoami):$(id -gn) /etc/nixos && sudo chmod -R 777 /etc/nixos && sudo chmod +x /etc/nixos/* && export NIXPKGS_ALLOW_INSECURE=1
+
+# Vaccum logs
+# sudo journalctl --rotate && sudo journalctl --vacuum-time=1s && journalctl --disk-usage

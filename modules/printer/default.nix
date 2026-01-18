@@ -27,3 +27,6 @@ in {
     denyInterfaces = [ "docker0" "br-*" "veth*" ];
   };
 }
+
+# Notes:
+# sudo pkill -9 avahi-daemon; sudo systemctl stop avahi-daemon.{service,socket}; sudo rm -rf /run/avahi-daemon; sudo mkdir -p /run/avahi-daemon; sudo chown avahi:avahi /run/avahi-daemon; sudo systemctl reset-failed avahi-daemon.service; sudo systemctl start avahi-daemon.socket; sleep 1; sudo systemctl start avahi-daemon.service; systemctl status avahi-daemon.service

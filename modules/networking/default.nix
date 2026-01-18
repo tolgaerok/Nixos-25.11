@@ -6,8 +6,8 @@
 
     networkmanager = {
       enable = true;
-      appendNameservers =
-        [ "1.1.1.1" "8.8.8.8" ]; # ← Move inside networkmanager
+      appendNameservers = [ "1.1.1.1" "8.8.8.8" ];
+
     };
 
     extraHosts = ''

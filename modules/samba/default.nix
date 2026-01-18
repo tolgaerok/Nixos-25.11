@@ -1,12 +1,8 @@
-{ config, lib, pkgs, username, mainUser, sambagroups, ... }:
+{ config, lib, pkgs, ... }:
 
-let
-  mainUser = "tolga";
-  sambagroups = "users";
-in {
-
+{
   # ─────────────────────────────────────────────────────────
-  # 🌐 My samba config
+  # 🌐 Fully Automated Samba Config
   # Tolga Erok     
   # 28/7/2025
   # ─────────────────────────────────────────────────────────
@@ -19,6 +15,16 @@ in {
     coredump.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    # Network & File Systems
+    cifs-utils
+    cups
+    firewalld-gui
+    nfs-utils
+    nvme-cli
+
+  ];
+
   users.groups.usershares = { };
 
   # ─────────────────────────────────────────────────────────
@@ -29,7 +35,6 @@ in {
     package = pkgs.samba4Full;
     openFirewall = true;
     usershares.enable = true;
-    # securityType = "user";
 
     settings = {
       global = {
@@ -46,6 +51,8 @@ in {
 
         "usershare path" = "/var/lib/samba/usershares";
         "usershare max shares" = "100";
+        "usershare allow guests" = "yes";
+        "usershare owner only" = "no";
 
         # ─────────────────────────────────────────────────────────
         # Logging
@@ -65,7 +72,6 @@ in {
         "guest account" = "nobody";
         "hosts allow" =
           "127.0.0.1 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 ::1 fd00::/8 fe80::/10";
-        # "hosts deny" = "allow";
         "inherit permissions" = "yes";
         "kernel oplocks" = "yes";
         "large readwrite" = "yes";
@@ -79,18 +85,18 @@ in {
         "read raw" = "yes";
         "security" = "user";
         "socket options" =
-          "SO_KEEPALIVE SO_REUSEADDR SO_BROADCAST TCP_NODELAY IPTOS_LOWDELAY IPTOS_THROUGHPUT SO_SNDBUF=262144 SO_RCVBUF=131072"; # 🔥
+          "SO_KEEPALIVE SO_REUSEADDR SO_BROADCAST TCP_NODELAY IPTOS_LOWDELAY IPTOS_THROUGHPUT SO_SNDBUF=262144 SO_RCVBUF=131072";
         "use sendfile" = "yes";
         "write raw" = "yes";
 
         # ─────────────────────────────────────────────────────────
         # Protocol Settings
         # ─────────────────────────────────────────────────────────
-        "client ipc max protocol" = "SMB3"; # 🔥
+        "client ipc max protocol" = "SMB3";
         "client ipc min protocol" = "COREPLUS";
-        "client max protocol" = "SMB3"; # 🔥
+        "client max protocol" = "SMB3";
         "client min protocol" = "COREPLUS";
-        "server max protocol" = "SMB3"; # 🔥
+        "server max protocol" = "SMB3";
         "server min protocol" = "COREPLUS";
 
         # ─────────────────────────────────────────────────────────
@@ -100,7 +106,6 @@ in {
         "disable spoolss" = "yes";
         "load printers" = "yes";
         "printcap name" = "cups";
-        # "printing" = "cups";
 
         # ─────────────────────────────────────────────────────────
         # IOS AND APPLE CONFIG
@@ -116,71 +121,72 @@ in {
       };
 
       # ─────────────────────────────────────────────────────────
-      # Samba Shares Configuration
+      # Samba Shares Configuration - Automated for all users
       # ─────────────────────────────────────────────────────────
       "homes" = {
         "comment" = "Home Directories";
-        "valid users" = "%S";
+        "valid users" = "%S, @users";
         "browseable" = "yes";
         "read only" = "no";
         "inherit acls" = "yes";
-        "force user" = mainUser;
-        "force group" = sambagroups;
-
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
       };
 
-      "NixOS_Public" = {
-        "path" = "/home/${mainUser}/Public";
+      "Public" = {
+        "comment" = "Public Share - %U";
+        "path" = "/home/%U/Public";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = mainUser;
-        "force group" = sambagroups;
-        "valid users" = mainUser;
+        "force user" = "%U";
+        "force group" = "users";
+        "valid users" = "%U, @users";
       };
 
       "Mega" = {
-        "path" = "/home/${mainUser}/Documents/MEGA";
+        "comment" = "MEGA Share - %U";
+        "path" = "/home/%U/Documents/MEGA";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = mainUser;
-        "force group" = sambagroups;
-        "valid users" = mainUser;
+        "force user" = "%U";
+        "force group" = "users";
+        "valid users" = "%U, @users";
       };
     };
-
   };
 
   # ─────────────────────────────────────────────────────────
-  # Samba Related
-  # sudo smbpasswd -a tolga
+  # Samba Related Services
+  # Setup: sudo smbpasswd -a <username>
+  # Verify: getent group users
   # ─────────────────────────────────────────────────────────
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
   };
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-    publish.enable = true;
-    publish.userServices = true;
-  };
+  # ─────────────────────────────────────────────────────────
+  # Auto-create directories for all users
+  # ─────────────────────────────────────────────────────────
+  systemd.tmpfiles.rules = [ "d /var/spool/samba 1777 root root - -" ];
 
-  systemd.tmpfiles.rules = [
-    "d /home/${mainUser} 0777 ${mainUser} users - -"
-    "d /home/${mainUser}/Documents/MEGA 0777 ${mainUser} users - -"
-    "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
-    "d /var/spool/samba 1777 root root -"
-    # "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
-    # "d /home/${mainUser}/Public 0777 ${mainUser} users - -"
-  ];
-
-
+  # Auto-create user directories on rebuild
+  system.activationScripts.sambaUserDirs = lib.mkAfter ''
+    for user_home in /home/*; do
+      if [ -d "$user_home" ]; then
+        user=$(basename "$user_home")
+        mkdir -p "$user_home/Public"
+        mkdir -p "$user_home/Documents/MEGA"
+        chown -R "$user:users" "$user_home/Public" "$user_home/Documents/MEGA"
+        chmod 0755 "$user_home/Public" "$user_home/Documents/MEGA"
+      fi
+    done
+  '';
 }

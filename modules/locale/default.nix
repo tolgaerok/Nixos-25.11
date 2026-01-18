@@ -16,4 +16,12 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
+
+  environment.systemPackages = with pkgs; [
+    # Spell Check
+    aspell
+    aspellDicts.en
+    hunspell
+    hunspellDicts.en_AU
+  ];
 }
