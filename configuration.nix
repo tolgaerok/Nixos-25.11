@@ -44,10 +44,10 @@
 
   # SYSTEM_VARIBLES
   environment.variables = {
-    # QT_QPA_PLATFORMTHEME = "qt5ct";
-    # QT_STYLE_OVERRIDE = "kvantum";
+    # wayland support
+    GDK_BACKEND = "wayland,x11"; # Prefer Wayland, fallback to X11
     NIXOS_OZONE_WL = "1";
-    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_QPA_PLATFORM = "wayland";
   };
 
   # STATE_VERSION

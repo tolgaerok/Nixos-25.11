@@ -30,6 +30,7 @@
         # file sharing
         21 # ftp
         22 # ssh
+        111
         139 # samba netbios
         445 # samba smb
         2049 # nfs

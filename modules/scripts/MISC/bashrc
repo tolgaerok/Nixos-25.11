@@ -56,12 +56,13 @@ scrub() {
 export PATH="$HOME/bin:$PATH"
 
 # Browser cache tmpfs aliases
+alias gendel='sudo /etc/nixos/modules/scripts/MISC/gen-del.sh'
 alias chrome='/usr/bin/google-chrome-stable --disk-cache-dir=/tmp/chrome-cache'
 alias chromium='/usr/bin/chromium --disk-cache-dir=/tmp/chromium-cache'
 alias brave='/usr/bin/brave --disk-cache-dir=/tmp/brave-cache'
 
 alias gitup='~/bin/gitup'
-alias rbs='sudo nixos-rebuild switch'
+alias rbs='sudo systemctl stop 'mnt-nfs\x2d*.automount' 2>/dev/null || true && sudo nixos-rebuild switch'
 
 alias bootime='systemd-analyze time && systemd-analyze blame | head -10 && systemd-analyze critical-chain && sysctl net.ipv4.tcp_congestion_control'
 
@@ -622,7 +623,7 @@ syspec() {
   echo
 }
 
-clear && echo && fortune | sed "s/^/    /" | lolcat && echo && upt
+clear && echo && fortune | sed "s/^/    /" | lolcat && echo && upt && nvidia-quick && echo
 # check-browser-cache
 sysctl (){
 
@@ -734,4 +735,5 @@ unset -f _create_tmpfs_dirs _show_tmpfs_status
 # check-browser-cache
 
 echo "" && echo ""
-if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
+# if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
+

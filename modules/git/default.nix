@@ -1,4 +1,30 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+with lib;
+let
+  # SSH tools paths
+  sshAdd = "${pkgs.openssh}/bin/ssh-add";
+  sshAgent = "${pkgs.openssh}/bin/ssh-agent";
+  sshKeygen = "${pkgs.openssh}/bin/ssh-keygen";
+
+  # Script: generate SSH key if missing
+  genSshKey = pkgs.writeShellScriptBin "gen-ssh-key" ''
+    set -e
+    if [[ -f $HOME/.ssh/id_ed25519 ]]; then
+      echo "🔐 SSH key already exists."
+      exit 0
+    fi
+    ${sshKeygen} -t ed25519 -C "$1" -f "$HOME/.ssh/id_ed25519"
+    eval $(${sshAgent} -s)
+    ${sshAdd} $HOME/.ssh/id_ed25519
+    echo "🔑 SSH key generated and added to agent."
+  '';
+in {
+
+  environment.systemPackages = with pkgs;
+    [
+      # Custom
+      genSshKey
+    ];
 
   # Git configuration...
   programs.git = {

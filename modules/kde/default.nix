@@ -33,5 +33,11 @@
     libsForQt5.qt5ct
     papirus-icon-theme
     qt5.qtbase
+
+    # qt wayland for sddm
+    kdePackages.qtmultimedia # qt6 multimedia
+    kdePackages.qtwayland # qt6
+    libsForQt5.qt5.qtwayland # qt5
+    libsForQt5.qtmultimedia # qt5 multimedia
   ];
 }

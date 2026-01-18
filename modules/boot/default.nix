@@ -1,4 +1,8 @@
 { config, pkgs, lib, ... }: {
+
+  # Disable TPM
+  security.tpm2.enable = false;
+
   boot = {
     # TPM causes hangs - disable it
     blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
@@ -27,7 +31,7 @@
         editor = true;
         enable = true;
         memtest86.enable = true;
-        configurationLimit = 3;
+        # configurationLimit = 3;
       };
       efi.canTouchEfiVariables = true;
       timeout = 3;
@@ -44,37 +48,4 @@
       };
     };
   };
-
-  # Disable TPM
-  security.tpm2.enable = false;
-
-  # Fix avahi runtime directory issue, a head fuck
-  #systemd.services.avahi-daemon-setup = {
-  #  description = "Create Avahi Runtime Directory";
-  #  before = [ "avahi-daemon.service" ];
-  #  requiredBy = [ "avahi-daemon.service" ];
-  #  serviceConfig = {
-  #    Type = "oneshot";
-  #    RemainAfterExit = true;
-  #    ExecStart = "${pkgs.coreutils}/bin/mkdir -p /run/avahi-daemon";
-  #    ExecStartPost = "${pkgs.coreutils}/bin/chown avahi:avahi /run/avahi-daemon";
-  #  };
-  #};
-
-  #systemd.services.avahi-daemon.preStart = lib.mkForce ''
-  #  rm -f /run/avahi-daemon/pid || true
-  #'';
-
-  # Suppress systemd status messages
-  #systemd.settings.Manager = {
-  #  ShowStatus = "no";
-  #  DefaultStandardOutput = "null";
-  #  DefaultStandardError = "null";
-  #};
-
-  # Block slow serial/TPM devices on my machine
-  #services.udev.extraRules = ''
-  #  SUBSYSTEM=="tty", KERNEL=="ttyS[0-3]", ENV{SYSTEMD_READY}="0"
-  #  SUBSYSTEM=="tpm", ENV{SYSTEMD_READY}="0"
-  #'';
 }

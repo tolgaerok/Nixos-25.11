@@ -29,14 +29,15 @@
     };
 
     # System services
-    udisks2.enable = true;
     # resolved.enable = true;
     devmon.enable = true;
     envfs.enable = true;
     fwupd.enable = true;
     geoclue2.enable = true;
     gvfs.enable = true;
+    nfs.server.enable = true;
     rpcbind.enable = true;
+    udisks2.enable = true;
 
     # Thumbnail generation
     tumbler.enable = true;

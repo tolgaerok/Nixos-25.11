@@ -13,8 +13,8 @@ in {
 
   nix = {
     settings = {
-      # Bigger buffer for downloads (helps with large store paths)
-      download-buffer-size = 250000000;
+      # bigger buffer for downloads (128mb)
+      download-buffer-size = 134217728;
 
       # Users allowed to run nix commands
       allowed-users = [ "@wheel" "${name}" ];

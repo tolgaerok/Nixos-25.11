@@ -1,13 +1,15 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+
+{
   systemd = {
     tmpfiles.rules = [
       "D! /tmp 1777 root root 0"
       "d /home/tolga/Documents/MEGA 0775 tolga users -"
-      "d /mnt/QNAP_LINUXTWEAKS 0750 tolga users -"
-      "d /mnt/QNAP_PUBLIC 0750 tolga users -"
       "d /var/spool/samba 1777 root root -"
       "r! /tmp/**/*"
     ];
+
+    services.NetworkManager-wait-online.enable = false;
 
     settings.Manager = {
       DefaultLimitNOFILE = "1048576";
@@ -16,6 +18,8 @@
       DefaultTimeoutStopSec = "1s";
       ShowStatus = "no";
     };
+
+    coredump.enable = true;
 
     services.avahi-daemon-setup = {
       description = "Create Avahi Runtime Directory";
@@ -33,8 +37,6 @@
     services.avahi-daemon.preStart = lib.mkForce ''
       rm -f /run/avahi-daemon/pid || true
     '';
-
-    coredump.enable = true;
 
     user.services.easyeffects = {
       description = "easyeffects daemon";

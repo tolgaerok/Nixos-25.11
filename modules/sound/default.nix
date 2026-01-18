@@ -32,14 +32,4 @@
       }];
     };
   };
-
-  # systemd.user.services.easyeffects = {
-  #   description = "easyeffects daemon";
-  #   wantedBy = [ "default.target" ];
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     ExecStart =
-  #       "${pkgs.flatpak}/bin/flatpak run --branch=stable --arch=x86_64 com.github.wwmm.easyeffects --gapplication-service";
-  #     Restart = "on-failure";
-  #   };
 }

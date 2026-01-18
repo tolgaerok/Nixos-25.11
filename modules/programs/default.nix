@@ -4,6 +4,7 @@
   programs = {
     # programs.firefox.enable = true;   # PRINTING ISSUES FUCKED USE FLATPAK VERSION INSTEAD
     bash.enable = true;
+    bash.completion.enable = true;
     dconf.enable = true;
     fuse.userAllowOther = true;
     git.enable = true;
