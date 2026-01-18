@@ -53,6 +53,7 @@
 
     # Development
     fastfetch
+    bc
     gcc
     ncdu
     nix-direnv
