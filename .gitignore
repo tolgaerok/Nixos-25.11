@@ -1,8 +1,0 @@
-.gitignore
-/modules/samba/smb-secrets
-default copy.nix
-modules/samba/smb-secrets
-portals
-secrets.nix
-smb-secrets
-
