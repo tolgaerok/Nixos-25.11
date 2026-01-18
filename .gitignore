@@ -4,3 +4,4 @@ smb-secrets
 /modules/samba/smb-secrets
 portals
 modules/samba/smb-secrets
+.gitignore
