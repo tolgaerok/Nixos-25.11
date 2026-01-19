@@ -51,6 +51,11 @@ in {
         IdentityFile ~/.ssh/id_ed25519
     '';
   };
+
+  environment.shellInit = ''
+    git config --global user.name "Tolga Erok" 2>/dev/null || true
+    git config --global user.email "kingtolga@gmail.com" 2>/dev/null || true
+  '';
 }
 
 # mkdir -p ~/.ssh && chmod 700 ~/.ssh

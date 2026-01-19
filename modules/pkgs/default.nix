@@ -64,6 +64,7 @@
     pkg-config
     ripgrep
     vscode
+    # vscode-fhs
     vscode-extensions.brettm12345.nixfmt-vscode
     vscode-extensions.foxundermoon.shell-format
     vscode-extensions.mkhl.direnv

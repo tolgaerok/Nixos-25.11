@@ -9,15 +9,13 @@
 
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
-    <td style="border: none; width: 30%;" valign="top">
-      <div align="center">  
-          <img src="https://github.com/tolgaerok/nixos/assets/110285959/fa785dec-f839-43f2-9e03-58adb73d12c3" alt="HP" style="width: 80%;">
-          <br>  
-        </a>
-      </div>
+    <td style="border: none;" align="center">
+      <img src="https://github.com/tolgaerok/nixos/assets/110285959/fa785dec-f839-43f2-9e03-58adb73d12c3" alt="HP" style="width: 30%; max-width: 300px;">
     </td>
-    <td style="border: none; width: 70%;">
-      <table>
+  </tr>
+  <tr>
+    <td style="border: none;">
+      <table style="width: 100%;">
         <tr>
           <th align="left">Device</th>
           <th align="left">Specification</th>
@@ -56,6 +54,8 @@
         </tr>  
       </table>
     </td>
+  </tr>
+</table>
 
 # Notes:
 
