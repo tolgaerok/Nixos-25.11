@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -20,7 +15,7 @@
     ./mnt
     ./networking
     ./nix
-    ./nvidia
+    ./nvidia/nv.nix
     ./pkgs
     ./printer
     ./programs
