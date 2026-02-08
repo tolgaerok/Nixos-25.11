@@ -22,7 +22,7 @@
     killall
     libnotify
     lsd
-    nfs-utils
+    # nfs-utils
     pipx
     util-linux
     vim

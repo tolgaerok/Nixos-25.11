@@ -42,6 +42,12 @@
   # NVIDIA
   drivers.nvidia.enable = true;
 
+  tweaks.io-optimization = {
+    enable = true;
+    scx.enable = true;
+    scx.scheduler = "rusty"; # or "lavd" for your VM workflow
+  };
+
   # SYSTEM_VARIBLES
   environment.variables = {
     # wayland support

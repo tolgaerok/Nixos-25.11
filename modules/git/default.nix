@@ -20,11 +20,11 @@ let
   '';
 in {
 
-  environment.systemPackages = with pkgs;
-    [
-      # Custom
-      genSshKey
-    ];
+  environment.systemPackages = with pkgs; [
+    # Custom
+    genSshKey
+    sshpass
+  ];
 
   # Git configuration...
   programs.git = {

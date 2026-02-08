@@ -28,6 +28,12 @@
     openFirewall = true;
     usershares.enable = true;
 
+    # ─────────────────────────────────────────────────────────
+    # DISABLE BOOT-BLOCKING SERVICES
+    # ─────────────────────────────────────────────────────────
+    nmbd.enable = false; # kills 15s boot delay
+    winbindd.enable = false; # not needed for standalone
+
     settings = {
       global = {
         # ─────────────────────────────────────────────────────────

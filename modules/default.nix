@@ -3,7 +3,7 @@
 {
   imports = [
     ./boot
-    ./docker
+    # ./docker
     ./firewall
     ./flatpaks
     ./fonts
@@ -24,5 +24,6 @@
     ./sound
     ./systemD
     ./users
+    ./io-optimization
   ];
 }

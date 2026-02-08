@@ -26,8 +26,8 @@
 
     # Kernel parameters
     kernel.sysctl = {
-      "net.core.default_qdisc" = "fq";
-      "net.ipv4.tcp_congestion_control" = "bbr";
+      # "net.core.default_qdisc" = "fq";
+      # "net.ipv4.tcp_congestion_control" = "bbr";
       "vm.swappiness" = 10;
       "vm.vfs_cache_pressure" = 50;
 
@@ -55,8 +55,8 @@
       "noirqdebug"
 
       # NVIDIA drivers
-      "nvidia-drm.fbdev=1"
-      "nvidia-drm.modeset=1"
+      #"nvidia-drm.fbdev=1"
+      #"nvidia-drm.modeset=1"
 
       # Silent boot with Plymouth
       "quiet"
@@ -79,7 +79,7 @@
     # Initial ramdisk
     initrd = {
       availableKernelModules =
-        [ "ahci" "sd_mod" "sr_mod" "uas" "usbhid" "xhci_pci" "nvidia" ];
+        [ "ahci" "sd_mod" "sr_mod" "uas" "usbhid" "xhci_pci" ]; # "nvidia"
 
       kernelModules = [ ];
 

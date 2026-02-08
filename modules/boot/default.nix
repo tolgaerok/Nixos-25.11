@@ -12,11 +12,12 @@
 
     # Tmpfs
     tmp.cleanOnBoot = false;
-    tmp.tmpfsSize = "25%";
+    # tmp.tmpfsSize = "25%";
     tmp.useTmpfs = true;
 
     # Kernel
-    kernelPackages = pkgs.linuxPackages_xanmod;
+    # kernelPackages = pkgs.linuxPackages_xanmod;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     # Plymouth for boot splash
     plymouth = {
@@ -41,11 +42,11 @@
     initrd = {
       systemd.enable = true;
       verbose = false;
-      systemd.services.plymouth-start = {
-        wantedBy = [ "sysinit.target" ];
-        before = [ "systemd-ask-password-console.service" ];
-        conflicts = [ "emergency.target" ];
-      };
+      #systemd.services.plymouth-start = {
+      #  wantedBy = [ "sysinit.target" ];
+      #  before = [ "systemd-ask-password-console.service" ];
+      #  conflicts = [ "emergency.target" ];
+      #};
     };
   };
 }
