@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
+  # ── Get the good shit to build this shit-box ──────────
   imports = [
     # ./docker
     ./boot
@@ -11,6 +12,7 @@
     ./hw-clock
     ./io-optimization
     ./kde
+    ./korganiser
     ./locale
     ./memory
     ./mnt
@@ -25,7 +27,6 @@
     ./sound
     ./systemD
     ./users
-    ./korganiser
   ];
 
   # ── NVIDIA ────────────────────────────────────────────────────
