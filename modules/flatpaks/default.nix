@@ -1,18 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config, lib, pkgs, ...
 
 }:
 
 {
   # Flatpak
-  services = {
-    flatpak = {
-      enable = true;
-    };
-  };
+  services = { flatpak = { enable = true; }; };
 
   environment.systemPackages = with pkgs; [
     # Flatpak & Desktop Portal

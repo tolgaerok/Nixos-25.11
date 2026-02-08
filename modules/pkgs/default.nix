@@ -37,7 +37,7 @@
     wireplumber
 
     # Productivity
-    megasync
+    # megasync
     variety
     wpsoffice
 
