@@ -1,11 +1,11 @@
-# =================================================================================
+# ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 # module:  io-optimization.nix
 # author:  kingtolga
 # date:    8 feb 26
 # version: 1.0
 # description: nixos module for i/o + cpu scheduler optimization
 #              replaces imperative udev/sysctl/systemd from my fedora bash script
-#==================================================================================
+# ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 { config, lib, pkgs, ... }:
 
@@ -13,12 +13,12 @@ with lib;
 let
   cfg = config.tweaks.io-optimization;
 
-  # resolve scx package — nixpkgs has scx.rusty, scx.lavd, scx.bpfland, etc. available on their pkg website
-  # use scx.full as fallback if individual scheduler not packaged separately as i found out the fucked up hard way
+  # ── resolve scx package — nixpkgs has scx.rusty, scx.lavd, scx.bpfland, etc. available on their pkg website ─────────────── 
+  # ── use scx.full as fallback if individual scheduler not packaged separately as i found out the fucked up hard way ──────── 
   scxPkg = pkgs.scx.${cfg.scx.scheduler} or pkgs.scx.full;
 
-  # my personal diagnostic script
-  # ioCheckScript = pkgs.writeShellScriptBin "io-check" (builtins.readFile ./io-check.sh);
+  # ── my personal diagnostic script ─────────────────────────────────────────────────────────────── 
+  # ── oCheckScript = pkgs.writeShellScriptBin "io-check" (builtins.readFile ./io-check.sh); ───────
   ioCheckScript =
     pkgs.writeScriptBin "io-check" (builtins.readFile ./io-check.sh);
 in {
@@ -97,7 +97,7 @@ in {
       }"
     '';
 
-    # ── sysctl ───────────────────────────────────────────────────────────────
+    # ── sysctl ─────────────────────────────────────────────────────────────── 
     boot.kernel.sysctl = mkMerge [
       (mkIf cfg.enableBBR {
         "net.ipv4.tcp_congestion_control" = "bbr";
@@ -106,14 +106,14 @@ in {
       (mkIf cfg.enableAutogroup { "kernel.sched_autogroup_enabled" = 1; })
     ];
 
-    # ── bbr module ───────────────────────────────────────────────────────────
+    # ── bbr module ─────────────────────────────────────────────────────────── 
     boot.kernelModules = mkIf cfg.enableBBR [ "tcp_bbr" ];
 
-    # ── packages (diagnostic script + optional scx) ──────────────────────────
+    # ── packages (diagnostic script + optional scx) ────────────────────────── 
     environment.systemPackages = [ ioCheckScript ]
       ++ (optionals cfg.scx.enable [ scxPkg ]);
 
-    # ── scx systemd service ──────────────────────────────────────────────────
+    # ── scx systemd service ────────────────────────────────────────────────── 
     systemd.services."scx-scheduler" = mkIf cfg.scx.enable {
       description = "SCX ${cfg.scx.scheduler} Scheduler";
       after = [ "multi-user.target" ];

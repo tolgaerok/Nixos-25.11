@@ -27,29 +27,33 @@
     ./users
   ];
 
-  # NVIDIA
+  # ── NVIDIA ────────────────────────────────────────────────────
   drivers.nvidia.enable = true;
 
+  # ── ADDITIONAL SCHEDULERS ───────────────────────────────────── 
   tweaks.io-optimization = {
     enable = true;
     scx.enable = true;
-    scx.scheduler = "rusty"; # or "lavd" for your VM workflow
+    scx.scheduler = "rusty"; # or "lavd" for VM workflow
   };
 
-  # SYSTEM_VARIBLES
+  # ── SYSTEM_VARIBLES ─────────────────────────────────────────── 
   environment.variables = {
-    # wayland support
+
+    # ── wayland support ── #
     GDK_BACKEND = "wayland,x11"; # Prefer Wayland, fallback to X11
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland";
   };
 }
 
-# Notes:
+# ──── NOTES ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+# ── Make etc/nixos owned and fully writable ── #
 # sudo chown -R $(whoami):$(id -gn) /etc/nixos && sudo chmod -R 777 /etc/nixos && sudo chmod +x /etc/nixos/* && export NIXPKGS_ALLOW_INSECURE=1
 
-# Vaccum logs
+# ── Vaccum logs ── # 
 # sudo journalctl --rotate && sudo journalctl --vacuum-time=1s && journalctl --disk-usage
 
-# Check boot times
+# ── Check boot times ── #
 # systemd-analyze && systemctl status plymouth-start.service && systemd-analyze blame | head -20

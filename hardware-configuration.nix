@@ -4,12 +4,12 @@
 { config, lib, pkgs, modulesPath, ... }: {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  # Boot configuration
+  # ── Boot configuration ──────────────────────────────────────────────────────────────────
   boot = {
-    # Blacklist conflicting drivers
+    # ── Blacklist conflicting drivers ─────────────────────────────────────────────────────
     blacklistedKernelModules = lib.mkDefault [ "nouveau" "serial8250" ];
 
-    # Kernel modules - NVIDIA loaded here (after Plymouth)
+    # ── Kernel modules - NVIDIA loaded here (after Plymouth) ──────────────────────────────
     kernelModules = [
       "kvm-intel"
       "lz4"
@@ -24,59 +24,59 @@
 
     extraModulePackages = [ ];
 
-    # Kernel parameters
+    # ── Kernel parameters ───────────────────────────────────
     kernel.sysctl = {
-      # "net.core.default_qdisc" = "fq";
-      # "net.ipv4.tcp_congestion_control" = "bbr";
       "vm.swappiness" = 10;
       "vm.vfs_cache_pressure" = 50;
+      # "net.core.default_qdisc" = "fq";
+      # "net.ipv4.tcp_congestion_control" = "bbr";
 
-      # SSD tuning
+      # ── SSD tuning ────────────────────────────────────────
       "vm.dirty_background_ratio" = 10;
       "vm.dirty_ratio" = 20;
       "vm.dirty_writeback_centisecs" = 300;
     };
 
     kernelParams = [
-      # Performance and I/O
+      # ── Performance and I/O ───────────────────────────────
       "io_delay=none"
       "iomem=relaxed"
       "rootdelay=0"
 
-      # Security mitigations
+      # ── Security mitigations ──────────────────────────────
       "mitigations=off"
 
-      # Intel IOMMU
+      # ── Intel IOMMU ───────────────────────────────────────
       "intel_iommu=on"
       "iommu=pt"
 
-      # IRQ configuration
+      # ── IRQ configuration ─────────────────────────────────
       "nmi-watchdog=0"
       "noirqdebug"
 
-      # NVIDIA drivers
+      # ── NVIDIA drivers ────────────────────────────────────
       #"nvidia-drm.fbdev=1"
       #"nvidia-drm.modeset=1"
 
-      # Silent boot with Plymouth
-      "quiet"
-      "splash"
-      #"console=tty1"
+      # ── Silent boot with Plymouth ─────────────────────────
       "fbcon=nodefer"
       "loglevel=3"
-      #"logo.nologo"
-      #"plymouth.ignore-serial-consoles"
+      "quiet"
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
+      "splash"
       "systemd.show_status=auto"
       "udev.log_level=3"
+      #"console=tty1"
+      #"logo.nologo"
+      #"plymouth.ignore-serial-consoles"
       #"vt.global_cursor_default=0"
 
-      # Video
+      # ── Video ──────────────────────────────────────────────
       "video.allow_duplicates=1"
     ];
 
-    # Initial ramdisk
+    # ── Initial ramdisk ──────────────────────────────────────
     initrd = {
       availableKernelModules =
         [ "ahci" "sd_mod" "sr_mod" "uas" "usbhid" "xhci_pci" ]; # "nvidia"
@@ -87,7 +87,7 @@
     };
   };
 
-  # File systems
+  # ── File systems ───────────────────────────────────────────
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/54b56672-3554-4442-bb08-7f7bfbead48c";

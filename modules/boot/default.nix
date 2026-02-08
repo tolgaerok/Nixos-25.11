@@ -1,52 +1,49 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
 
-  # Disable TPM
+{
+
+  # ── Disable TPM ──────────────────────────────────────────────────────────────────
   security.tpm2.enable = false;
 
   boot = {
-    # TPM causes hangs - disable it
+    # ── TPM causes hangs - disable it ──────────────────────────────────────────────────────────────────
     blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
 
-    # Silent boot
+    # ── Silent boot ──────────────────────────────────────────────────────────────────
     consoleLogLevel = 0;
 
-    # Tmpfs
-    tmp.cleanOnBoot = false;
+    # ── Tmpfs ──────────────────────────────────────────────────────────────────
     # tmp.tmpfsSize = "25%";
+    tmp.cleanOnBoot = false;
     tmp.useTmpfs = true;
 
-    # Kernel
+    # ── KERNELS ──────────────────────────────────────────────────────────────────
     # kernelPackages = pkgs.linuxPackages_xanmod;
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # Plymouth for boot splash
+    # ── Plymouth for boot splash ──────────────────────────────────────────────────────────────────
     plymouth = {
       enable = true;
       theme = "breeze"; # or "spinner"
     };
 
-    # Bootloader
+    # ──  Bootloader ──────────────────────────────────────────────────────────────────
     loader = {
       systemd-boot = {
+        configurationLimit = 10;
         consoleMode = "max";
         editor = true;
         enable = true;
         memtest86.enable = true;
-        # configurationLimit = 3;
       };
       efi.canTouchEfiVariables = true;
       timeout = 3;
     };
 
-    # Plymouth initrd setup
+    # ── Plymouth initrd setup ──────────────────────────────────────────────────────────────────
     initrd = {
       systemd.enable = true;
       verbose = false;
-      #systemd.services.plymouth-start = {
-      #  wantedBy = [ "sysinit.target" ];
-      #  before = [ "systemd-ask-password-console.service" ];
-      #  conflicts = [ "emergency.target" ];
-      #};
     };
   };
 }
