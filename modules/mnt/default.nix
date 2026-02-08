@@ -8,7 +8,7 @@
       "d /mnt/nfs-linuxtweaks 0775 tolga users -"
       "d /mnt/nfs-public 0775 tolga users -"
       # cifs
-      "d /mnt/QNAP_LINUXTWEAKS 0750 tolga users -"
+      "d /mnt/QNAP-LINUXTWEAKS 0750 tolga users -"
       "d /mnt/QNAP_PUBLIC 0750 tolga users -"
     ];
   };
@@ -23,6 +23,7 @@
       "gid=100"
       "file_mode=0640"
       "dir_mode=0750"
+      # "noauto"
       "nofail"
       "x-systemd.automount"
       "x-systemd.idle-timeout=60"
@@ -30,20 +31,21 @@
   };
 
   # linuxtweaks (cifs/smb)
-  fileSystems."/mnt/QNAP_LINUXTWEAKS" = {
-    device = "//192.168.0.17/LINUXTWEAKS";
-    fsType = "cifs";
-    options = [
-      "credentials=/etc/nixos/modules/samba/smb-secrets"
-      "uid=1000"
-      "gid=100"
-      "file_mode=0640"
-      "dir_mode=0750"
-      "nofail"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=60"
-    ];
-  };
+  #fileSystems."/mnt/QNAP-LINUXTWEAKS" = {
+  #  device = "//192.168.0.17/LINUXTWEAKS";
+  #  fsType = "cifs";
+  #  options = [
+  #    "credentials=/etc/nixos/modules/samba/smb-secrets"
+  #    "uid=1000"
+  #    "gid=100"
+  #    "file_mode=0640"
+  #    "dir_mode=0750"
+  #    # "noauto"
+  #    "nofail"
+  #    "x-systemd.automount"
+  #    "x-systemd.idle-timeout=60"
+  #  ];
+  #};
 
   # public (nfs)
   fileSystems."/mnt/nfs-public" = {

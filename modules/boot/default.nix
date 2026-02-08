@@ -1,49 +1,60 @@
 { config, pkgs, lib, ... }:
 
-{
+with lib; {
+  options = {
+    numlock-boot.enable = lib.mkEnableOption "Boot with NumLock on";
+  };
 
-  # ── Disable TPM ─────────────────────────────────────────────────
-  security.tpm2.enable = false;
+  config = {
+    # ── NumLock on boot ─────────────────────────────────────────────
+    services.xserver.displayManager.setupCommands =
+      mkIf config.numlock-boot.enable ''
+        ${pkgs.numlockx}/bin/numlockx on
+      '';
 
-  boot = {
-    # ── TPM causes hangs - disable it ─────────────────────────────
-    blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
+    # ── Disable TPM ─────────────────────────────────────────────────
+    security.tpm2.enable = false;
 
-    # ── Silent boot ───────────────────────────────────────────────
-    consoleLogLevel = 0;
+    boot = {
+      # ── TPM causes hangs - disable it ─────────────────────────────
+      blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
 
-    # ── Tmpfs ─────────────────────────────────────────────────────
-    # tmp.tmpfsSize = "25%";
-    tmp.cleanOnBoot = false;
-    tmp.useTmpfs = true;
+      # ── Silent boot ───────────────────────────────────────────────
+      consoleLogLevel = 0;
 
-    # ── KERNELS ───────────────────────────────────────────────────
-    # kernelPackages = pkgs.linuxPackages_xanmod;
-    kernelPackages = pkgs.linuxPackages_latest;
+      # ── Tmpfs ─────────────────────────────────────────────────────
+      # tmp.tmpfsSize = "25%";
+      tmp.cleanOnBoot = false;
+      tmp.useTmpfs = true;
 
-    # ── Plymouth for boot splash ──────────────────────────────────
-    plymouth = {
-      enable = true;
-      theme = "breeze"; # or "spinner"
-    };
+      # ── KERNELS ───────────────────────────────────────────────────
+      # kernelPackages = pkgs.linuxPackages_xanmod;
+      kernelPackages = pkgs.linuxPackages_latest;
 
-    # ──  Bootloader ────────────────────────────────────────────────
-    loader = {
-      systemd-boot = {
-        configurationLimit = 10;
-        consoleMode = "max";
-        editor = true;
+      # ── Plymouth for boot splash ──────────────────────────────────
+      plymouth = {
         enable = true;
-        memtest86.enable = true;
+        theme = "breeze";
       };
-      efi.canTouchEfiVariables = true;
-      timeout = 3;
-    };
 
-    # ── Plymouth initrd setup ──────────────────────────────────────
-    initrd = {
-      systemd.enable = true;
-      verbose = false;
+      # ── Bootloader ────────────────────────────────────────────────
+      loader = {
+        systemd-boot = {
+          configurationLimit = 10;
+          consoleMode = "max";
+          editor = true;
+          enable = true;
+          memtest86.enable = true;
+        };
+        efi.canTouchEfiVariables = true;
+        timeout = 3;
+      };
+
+      # ── Plymouth initrd setup ─────────────────────────────────────
+      initrd = {
+        systemd.enable = true;
+        verbose = false;
+      };
     };
   };
 }
