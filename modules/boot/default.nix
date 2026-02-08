@@ -2,32 +2,32 @@
 
 {
 
-  # ── Disable TPM ──────────────────────────────────────────────────────────────────
+  # ── Disable TPM ─────────────────────────────────────────────────
   security.tpm2.enable = false;
 
   boot = {
-    # ── TPM causes hangs - disable it ──────────────────────────────────────────────────────────────────
+    # ── TPM causes hangs - disable it ─────────────────────────────
     blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
 
-    # ── Silent boot ──────────────────────────────────────────────────────────────────
+    # ── Silent boot ───────────────────────────────────────────────
     consoleLogLevel = 0;
 
-    # ── Tmpfs ──────────────────────────────────────────────────────────────────
+    # ── Tmpfs ─────────────────────────────────────────────────────
     # tmp.tmpfsSize = "25%";
     tmp.cleanOnBoot = false;
     tmp.useTmpfs = true;
 
-    # ── KERNELS ──────────────────────────────────────────────────────────────────
+    # ── KERNELS ───────────────────────────────────────────────────
     # kernelPackages = pkgs.linuxPackages_xanmod;
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # ── Plymouth for boot splash ──────────────────────────────────────────────────────────────────
+    # ── Plymouth for boot splash ──────────────────────────────────
     plymouth = {
       enable = true;
       theme = "breeze"; # or "spinner"
     };
 
-    # ──  Bootloader ──────────────────────────────────────────────────────────────────
+    # ──  Bootloader ────────────────────────────────────────────────
     loader = {
       systemd-boot = {
         configurationLimit = 10;
@@ -40,7 +40,7 @@
       timeout = 3;
     };
 
-    # ── Plymouth initrd setup ──────────────────────────────────────────────────────────────────
+    # ── Plymouth initrd setup ──────────────────────────────────────
     initrd = {
       systemd.enable = true;
       verbose = false;
