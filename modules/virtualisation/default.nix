@@ -3,7 +3,7 @@
 let username = "tolga";
 in with lib; {
 
-  # ── Install necessary packages
+  # ── Install necessary packages ── #
   environment.systemPackages = with pkgs; [
     adwaita-icon-theme
     docker-client
@@ -29,13 +29,13 @@ in with lib; {
     win-spice
   ];
 
-  # ── Virt-manager (NixOS module handles dconf/GSettings)
+  # ── Virt-manager (NixOS module handles dconf/GSettings) ── #
   programs.virt-manager.enable = true;
 
-  # ── Virtualisation services
+  # ── Virtualisation services ── #
   virtualisation = {
 
-    # ── Libvirt / KVM / QEMU
+    # ── Libvirt / KVM / QEMU ── #
     libvirtd = {
       enable = true;
       onBoot = "ignore";
@@ -48,14 +48,14 @@ in with lib; {
 
     spiceUSBRedirection.enable = true;
 
-    # ── Docker (disable podman when docker is active)
+    # ── Docker (disable podman when docker is active) ── #
     docker = {
       enable = true;
       autoPrune.enable = true;
     };
     podman.enable = false;
 
-    # ── VirtualBox (disabled)
+    # ── VirtualBox (disabled) ── #
     virtualbox = {
       host.enable = false;
       host.enableExtensionPack = false;
@@ -63,7 +63,7 @@ in with lib; {
       guest.dragAndDrop = false;
     };
 
-    # ── VM variant settings
+    # ── VM variant settings ── #
     vmVariant = {
       virtualisation = {
         cores = 10;
@@ -72,11 +72,11 @@ in with lib; {
     };
   };
 
-  # ── User groups
+  # ── User groups ── #
   users.extraGroups.vboxusers.members = [ "${username}" ];
   users.users.${username}.extraGroups = [ "libvirt" "kvm" "docker" ];
 
-  # ── Environment / services
+  # ── Environment / services ── #
   environment.sessionVariables.LIBVIRT_DEFAULT_URI = "qemu:///system";
   services.spice-vdagentd.enable = true;
   systemd.services.libvirtd.restartIfChanged = false;
