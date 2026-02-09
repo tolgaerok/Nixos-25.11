@@ -30,6 +30,7 @@
 
     # Multimedia (streamlined)
     ffmpeg-full
+    ffmpegthumbnailer # Need For Video / Image Preview
     imagemagick
     mpv
     pavucontrol

@@ -27,6 +27,8 @@
     ./sound
     ./systemD
     ./users
+    ./virtualisation
+    
   ];
 
   # ── NVIDIA ────────────────────────────────────────────────────
