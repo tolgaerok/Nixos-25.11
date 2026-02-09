@@ -3,9 +3,11 @@
   # Programs
   programs = {
     # programs.firefox.enable = true;   # PRINTING ISSUES FUCKED USE FLATPAK VERSION INSTEAD
-    bash.enable = true;
     bash.completion.enable = true;
+    bash.enable = true;
     dconf.enable = true;
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
     fuse.userAllowOther = true;
     git.enable = true;
     mtr.enable = true;

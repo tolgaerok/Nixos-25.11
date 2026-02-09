@@ -42,6 +42,17 @@
   ];
 
   # ── STATE_VERSION ─────────── 
-  system.stateVersion = "25.11";
+  system = {
+    stateVersion = "25.11";
+    copySystemConfiguration = true;
+
+    autoUpgrade = {
+      allowReboot = false;
+      channel = "https://nixos.org/channels/nixos-25.11";
+      dates = "Mon 04:40";
+      enable = false;
+      operation = "boot";
+    };
+  };
 }
 

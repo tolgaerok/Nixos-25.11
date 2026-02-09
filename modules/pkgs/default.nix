@@ -9,11 +9,12 @@
     ./custom/new-smb-user.nix
   ];
 
-  # UNFREE_ALLOWANCE
+  # ── UNFREE_ALLOWANCE
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    # Core essentials
+    # ──  Core essentials
+    # nfs-utils
     curl
     direnv
     distrobox
@@ -22,39 +23,39 @@
     killall
     libnotify
     lsd
-    # nfs-utils
     pipx
     util-linux
     vim
     wget
 
-    # Multimedia (streamlined)
+    # ──  Multimedia (streamlined)
     ffmpeg-full
-    ffmpegthumbnailer # Need For Video / Image Preview
+    ffmpegthumbnailer
     imagemagick
     mpv
     pavucontrol
     pipewire
     wireplumber
 
-    # Productivity
+    # ──  Productivity
     # megasync
     variety
     wpsoffice
 
-    # Compression (essential only)
+    # ──  Compression (essential only)
     gzip
     p7zip
     unzip
     zip
     zstd
 
-    # Backup
+    # ── Backup
     restic
 
-    # Development
-    fastfetch
+    # ──  Development
+    # vscode-fhs
     bc
+    fastfetch
     gcc
     ncdu
     nix-direnv
@@ -65,22 +66,21 @@
     pkg-config
     ripgrep
     vscode
-    # vscode-fhs
     vscode-extensions.brettm12345.nixfmt-vscode
     vscode-extensions.foxundermoon.shell-format
     vscode-extensions.mkhl.direnv
 
-    # Python development
+    # ──  Python development
     # python3Full
     python312Packages.pip
     python312Packages.setuptools
     python312Packages.virtualenv
 
-    # Bash tools
+    # ──  Bash tools
     shellcheck
     shfmt
 
-    # System utilities & fun
+    # ──  System utilities & fun
     duf
     figlet
     fortune
@@ -89,7 +89,7 @@
     yad
     zenity
 
-    # Required libraries (minimal)
+    # ──  Required libraries (minimal)
     gtk-engine-murrine
     gtk3
     libGL
